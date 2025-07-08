@@ -135,7 +135,7 @@ This plan is meticulously crafted to eliminate all ambiguities and "lazy comment
   }
   ```
 
-- [ ] **Task 1.3: Implement Note Update and Delete API:** Create the dynamic API route file for individual notes and implement the `PUT` and `DELETE` handlers with ownership verification.
+- [x] **Task 1.3: Implement Note Update and Delete API:** Create the dynamic API route file for individual notes and implement the `PUT` and `DELETE` handlers with ownership verification.
 
   - **Command:** `mkdir -p src/app/api/notes/[noteId]`
   - **File:** `src/app/api/notes/[noteId]/route.ts`
