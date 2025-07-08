@@ -192,7 +192,7 @@ This plan systematically builds all the necessary UI components for the "Protoco
 ---
 ### 4. Study & Reminder Components
 
--   [ ] **Task 4.1: Create `ReminderForm` Component:** Create a static form for adding or editing a reminder.
+-   [x] **Task 4.1: Create `ReminderForm` Component:** Create a static form for adding or editing a reminder.
     *   **File:** `src/components/reminder-form.tsx`
     *   **Action:** Create the file with the following content.
     ```tsx
