@@ -44,7 +44,7 @@ This document outlines the high-level, phased plan for building the Protocolize 
 
 ---
 
-### `[ ]` Phase F: Frontend API Integration
+### `[x]` Phase F: Frontend API Integration
 
 **Goal:** Make the application fully dynamic by connecting the static frontend to the live backend. This involves **replacing all mock data** in the UI with live data fetched from the newly created API using `@tanstack/react-query` for data fetching, caching, and mutations.
 
