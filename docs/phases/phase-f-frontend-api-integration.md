@@ -128,7 +128,7 @@ This is a comprehensive phase focused on the frontend. It involves removing all 
   }
   ```
 
-- [ ] **Task 2.2: Create an API Client Library for Protocols and Episodes:**
+- [x] **Task 2.2: Create an API Client Library for Protocols and Episodes:**
 
   - **Command:** `mkdir -p src/lib/api`
   - **File:** `src/lib/api/content.ts`
