@@ -95,7 +95,7 @@ This plan systematically builds all the necessary UI components for the "Protoco
 ---
 ### 3. Journal & Note-Taking Components
 
--   [ ] **Task 3.1: Create `NoteEditor` Component:** Create a simple editor component for writing notes.
+-   [x] **Task 3.1: Create `NoteEditor` Component:** Create a simple editor component for writing notes.
     *   **File:** `src/components/note-editor.tsx`
     *   **Action:** Create the file with the following content.
     ```tsx
