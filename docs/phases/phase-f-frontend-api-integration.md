@@ -14,7 +14,7 @@ This is a comprehensive phase focused on the frontend. It involves removing all 
 
 ### 1. Setup `@tanstack/react-query`
 
-- [ ] **Task 1.1: Create a React Query Provider:** Create a new client component to provide the `QueryClient` to the entire application.
+- [x] **Task 1.1: Create a React Query Provider:** Create a new client component to provide the `QueryClient` to the entire application.
 
   - **File:** `src/components/query-provider.tsx`
   - **Action:** Create the file with the following complete content.
@@ -42,7 +42,7 @@ This is a comprehensive phase focused on the frontend. It involves removing all 
   }
   ```
 
-- [ ] **Task 1.2: Integrate `QueryProvider` into Root Layout:** Wrap the application with the new provider to make React Query available globally.
+- [x] **Task 1.2: Integrate `QueryProvider` into Root Layout:** Wrap the application with the new provider to make React Query available globally.
 
   - **File:** `src/app/layout.tsx`
   - **Action:** Replace the entire file content with the following code, which now includes the `QueryProvider`.

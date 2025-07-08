@@ -4,6 +4,7 @@ import './globals.css';
 import { AuthProvider } from '@/lib/auth-context';
 import Navbar from '@/components/Navbar';
 import { ThemeProvider } from '@/components/theme-provider';
+import QueryProvider from '@/components/query-provider';
 
 export const metadata: Metadata = {
   title: 'Protocolize - Turn Theory into Practice',
@@ -25,10 +26,12 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <AuthProvider>
-            <Navbar />
-            <main>{children}</main>
-          </AuthProvider>
+          <QueryProvider>
+            <AuthProvider>
+              <Navbar />
+              <main>{children}</main>
+            </AuthProvider>
+          </QueryProvider>
         </ThemeProvider>
       </body>
     </html>
