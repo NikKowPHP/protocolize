@@ -333,7 +333,7 @@ This plan is now fully explicit, removing any ambiguity. It contains the complet
     }
     ```
 
--   [ ] **Task 2.2: Polish Landing Page:** Update `src/app/page.tsx` to use theme-aware colors and improve visual hierarchy using `shadcn/ui` components.
+-   [x] **Task 2.2: Polish Landing Page:** Update `src/app/page.tsx` to use theme-aware colors and improve visual hierarchy using `shadcn/ui` components.
     *   **File:** `src/app/page.tsx`
     *   **Action:** Replace the entire file content with the following polished version.
     ```tsx

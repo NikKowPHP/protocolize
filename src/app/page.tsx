@@ -1,44 +1,50 @@
 import Link from 'next/link';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 
 const FeatureCard = ({ icon, title, description }: { icon: string, title: string, description: string }) => (
-  <div className="bg-gray-800 p-6 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300">
-    <div className="flex items-center justify-center h-12 w-12 rounded-full bg-blue-600 text-white mb-4">
-      <span className="text-2xl">{icon}</span>
-    </div>
-    <h3 className="text-xl font-bold mb-2">{title}</h3>
-    <p className="text-gray-400">{description}</p>
-  </div>
+  <Card className="text-center bg-card/50">
+    <CardHeader>
+      <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-primary/10 text-primary mb-4">
+        <span className="text-2xl">{icon}</span>
+      </div>
+      <CardTitle>{title}</CardTitle>
+    </CardHeader>
+    <CardContent>
+      <p className="text-muted-foreground">{description}</p>
+    </CardContent>
+  </Card>
 );
 
 export default function Home() {
   return (
-    <div className="bg-gray-900 text-white">
+    <>
       {/* Hero Section */}
       <section className="text-center py-20 px-4 sm:py-32">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight">
             Turn Wellness Theory into Daily Practice
           </h1>
-          <p className="mt-4 text-lg sm:text-xl text-gray-300">
+          <p className="mt-4 text-lg sm:text-xl text-muted-foreground">
             Stop just listening. Start doing. Protocolize helps you implement science-backed health protocols from your favorite experts into a consistent, actionable lifestyle.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row justify-center items-center gap-4">
-            <Link href="/signup" className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full text-lg transition-transform transform hover:scale-105 text-center">
-              Start for Free
-            </Link>
-            <Link href="/dashboard" className="w-full sm:w-auto bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-8 rounded-full text-lg transition-transform transform hover:scale-105 text-center">
-              Go to Dashboard
-            </Link>
+            <Button asChild size="lg">
+              <Link href="/signup">Start for Free</Link>
+            </Button>
+            <Button asChild variant="outline" size="lg">
+              <Link href="/dashboard">Go to Dashboard</Link>
+            </Button>
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-20 px-4 bg-gray-900">
-        <div className="max-w-6xl mx-auto">
+      <section id="features" className="py-20 px-4 bg-muted/40">
+        <div className="container mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl sm:text-4xl font-bold">Everything You Need for Consistent Action</h2>
-            <p className="mt-2 text-gray-400">Our platform is packed with features to make implementation effortless.</p>
+            <p className="mt-2 text-muted-foreground">Our platform is packed with features to make implementation effortless.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <FeatureCard
@@ -74,6 +80,26 @@ export default function Home() {
           </div>
         </div>
       </section>
-    </div>
+
+      {/* Final CTA Section */}
+      <section className="bg-primary text-primary-foreground">
+        <div className="container mx-auto text-center py-16 px-4">
+          <h2 className="text-3xl sm:text-4xl font-bold">
+            Ready to Protocolize Your Life?
+          </h2>
+          <p className="opacity-80 mt-2 mb-6">Stop guessing. Start building better habits today.</p>
+          <Button asChild size="lg" variant="secondary">
+            <Link href="/signup">Sign Up and Start for Free</Link>
+          </Button>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-background border-t">
+        <div className="container mx-auto py-6 px-4 text-center text-muted-foreground">
+          <p>© {new Date().getFullYear()} Protocolize. All rights reserved.</p>
+        </div>
+      </footer>
+    </>
   );
 }
