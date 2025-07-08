@@ -379,7 +379,7 @@ Here is the complete and refined `phase-a-project-setup-and-ui-scaffolding.md` f
 ---
 ### 4. Page Scaffolding
 
--   [ ] **Task 4.1: Update Dashboard Page:** Replace the content of `src/app/dashboard/page.tsx` with a simple placeholder for Protocolize.
+-   [x] **Task 4.1: Update Dashboard Page:** Replace the content of `src/app/dashboard/page.tsx` with a simple placeholder for Protocolize.
     *   **File:** `src/app/dashboard/page.tsx`
     *   **Action:** Replace the entire file content with the following code.
     ```tsx
