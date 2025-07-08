@@ -79,13 +79,13 @@ This phase marks the transition from static UI to a dynamic backend. Its sole fo
   }
   ```
 
-- [ ] **Task 2.2: Install Seeding Dependencies:** Install `ts-node`, which is required to run the TypeScript seed script directly.
+- [x] **Task 2.2: Install Seeding Dependencies:** Install `ts-node`, which is required to run the TypeScript seed script directly.
 
   ```bash
   npm install -D ts-node
   ```
 
-- [ ] **Task 2.3: Create the Seed Script:** Create the main seed script file that will orchestrate the data creation process.
+- [x] **Task 2.3: Create the Seed Script:** Create the main seed script file that will orchestrate the data creation process.
 
   - **File:** `prisma/seed.ts`
   - **Action:** Create the file with the following content. This script will call specific seeder functions for plans and protocols.
