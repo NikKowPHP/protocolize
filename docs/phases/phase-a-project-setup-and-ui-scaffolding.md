@@ -292,7 +292,7 @@ Here is the complete and refined `phase-a-project-setup-and-ui-scaffolding.md` f
     export default Navbar;
     ```
 
--   [ ] **Task 3.3: Update Public Landing Page Content:** Modify `src/app/page.tsx` to reflect Protocolize's branding and features.
+-   [x] **Task 3.3: Update Public Landing Page Content:** Modify `src/app/page.tsx` to reflect Protocolize's branding and features.
     *   **File:** `src/app/page.tsx`
     *   **Action:** Replace the entire content of the file with the following code.
     ```tsx
