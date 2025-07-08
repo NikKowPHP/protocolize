@@ -20,7 +20,7 @@ This plan systematically builds all the necessary UI components for the "Protoco
 ---
 ### 2. Epic 2: Core Content Experience Components
 
--   [ ] **Task 2.1: Create `ProtocolCard` Component:** Create a reusable card component to display a single protocol in a list.
+-   [x] **Task 2.1: Create `ProtocolCard` Component:** Create a reusable card component to display a single protocol in a list.
     *   **File:** `src/components/protocol-card.tsx`
     *   **Action:** Create the file with the following content.
     ```tsx
