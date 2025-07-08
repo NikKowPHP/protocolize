@@ -154,7 +154,7 @@ This phase marks the transition from static UI to a dynamic backend. Its sole fo
   }
   ```
 
-- [ ] **Task 2.5: Create the Protocol Seeder:** Create a dedicated seeder for the initial, free-tier protocols.
+- [x] **Task 2.5: Create the Protocol Seeder:** Create a dedicated seeder for the initial, free-tier protocols.
 
   - **File:** `prisma/seeders/protocols.ts`
   - **Action:** Create the file with the following content.
