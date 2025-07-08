@@ -492,7 +492,7 @@ This plan is meticulously crafted to eliminate all ambiguities and "lazy comment
 
 ### 4. Content Fetching API
 
-- [ ] **Task 4.1: Implement Public Content Fetching APIs:** Create the API routes for fetching published protocols and episodes.
+- [x] **Task 4.1: Implement Public Content Fetching APIs:** Create the API routes for fetching published protocols and episodes.
 
   - **Command:** `mkdir -p src/app/api/protocols src/app/api/episodes`
   - **File 1:** `src/app/api/protocols/route.ts`
