@@ -12,7 +12,7 @@ This plan is now fully explicit, removing any ambiguity. It contains the complet
 
 ### 1. Light/Dark Mode Implementation
 
--   [ ] **Task 1.1: Update `tailwind.config.ts` for Dark Mode:** Enable Tailwind's dark mode functionality by setting the `darkMode` strategy to `"class"`.
+-   [x] **Task 1.1: Update `tailwind.config.ts` for Dark Mode:** Enable Tailwind's dark mode functionality by setting the `darkMode` strategy to `"class"`.
     *   **File:** `tailwind.config.ts`
     *   **Action:** Replace the entire file content with the following code. This ensures the correct class-based strategy is used.
     ```ts
