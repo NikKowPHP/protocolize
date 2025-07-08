@@ -51,7 +51,7 @@ This plan systematically builds all the necessary UI components for the "Protoco
     };
     ```
 
--   [ ] **Task 2.2: Create `ProtocolList` Component:** Create a component to render a list of `ProtocolCard` components using mock data.
+-   [x] **Task 2.2: Create `ProtocolList` Component:** Create a component to render a list of `ProtocolCard` components using mock data.
     *   **File:** `src/components/protocol-list.tsx`
     *   **Action:** Create the file with the following content.
     ```tsx
