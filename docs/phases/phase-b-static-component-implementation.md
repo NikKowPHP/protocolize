@@ -74,7 +74,7 @@ This plan systematically builds all the necessary UI components for the "Protoco
     };
     ```
 
--   [ ] **Task 2.3: Integrate `ProtocolList` into Dashboard:** Update the Dashboard page to display the list of protocols.
+-   [x] **Task 2.3: Integrate `ProtocolList` into Dashboard:** Update the Dashboard page to display the list of protocols.
     *   **File:** `src/app/dashboard/page.tsx`
     *   **Action:** Replace the entire file content with the following code.
     ```tsx
