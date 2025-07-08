@@ -446,7 +446,7 @@ Here is the complete and refined `phase-a-project-setup-and-ui-scaffolding.md` f
         }
         ```
 
--   [ ] **Task 4.5: Create Pricing Page:**
+-   [x] **Task 4.5: Create Pricing Page:**
     *   **Command:** `mkdir -p src/app/pricing`
     *   **File:** `src/app/pricing/page.tsx`
     *   **Content:**
