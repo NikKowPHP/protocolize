@@ -311,7 +311,7 @@ This plan is meticulously crafted to eliminate all ambiguities and "lazy comment
   }
   ```
 
-- [ ] **Task 2.2: Implement Reminder Update and Delete API:** Create the dynamic API route for individual reminders with `PUT` and `DELETE` handlers.
+- [x] **Task 极2.2: Implement Reminder Update and Delete API:** Create the dynamic API route for individual reminders with `PUT` and `DELETE` handlers.
 
   - **Command:** `mkdir -p src/app/api/reminders/[reminderId]`
   - **File:** `src/app/api/reminders/[reminderId]/route.ts`
