@@ -20,7 +20,7 @@ Let's generate the complete, correct, and fully explicit plan for **Phase G**. T
   npm install stripe
   ```
 
-- [ ] **Task 1.2: Add Stripe Environment Variables:** Add the Stripe API keys and the Premium Price ID to the `.env.example` file.
+- [x] **Task 1.2: Add Stripe Environment Variables:** Add the Stripe API keys and the Premium Price ID to the `.env.example` file.
 
   - **File:** `.env.example`
   - **Action:** Add the following lines to the end of the file. You will need to create a "Premium" product in your Stripe Dashboard and a Price associated with it to get the `STRIPE_PREMIUM_PRICE_ID`.
