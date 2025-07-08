@@ -122,7 +122,7 @@ This plan systematically builds all the necessary UI components for the "Protoco
     };
     ```
 
--   [ ] **Task 3.2: Create `NoteList` Component:** Create a component to display a list of notes for an episode.
+-   [x] **Task 3.2: Create `NoteList` Component:** Create a component to display a list of notes for an episode.
     *   **File:** `src/components/note-list.tsx`
     *   **Action:** Create the file with the following content.
     ```tsx
