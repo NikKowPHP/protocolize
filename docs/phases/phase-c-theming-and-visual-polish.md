@@ -269,7 +269,7 @@ This plan is now fully explicit, removing any ambiguity. It contains the complet
 ---
 ### 2. Visual Polish & Consistency Review
 
--   [ ] **Task 2.1: Update Global Styles:** Refine `src/app/globals.css` to use CSS variables defined by `shadcn/ui` for background and foreground colors, ensuring the theme toggle works correctly.
+-   [x] **Task 2.1: Update Global Styles:** Refine `src/app/globals.css` to use CSS variables defined by `shadcn/ui` for background and foreground colors, ensuring the theme toggle works correctly.
     *   **File:** `src/app/globals.css`
     *   **Action:** Replace the entire file content with the following `tailwind` directives and CSS variables.
     ```css
