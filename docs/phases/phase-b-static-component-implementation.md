@@ -271,7 +271,7 @@ This plan systematically builds all the necessary UI components for the "Protoco
     };
     ```
 
--   [ ] **Task 4.3: Integrate Reminder Components into Study Page:** Update the Study page to show reminder management UI.
+-   [x] **Task 4.3: Integrate Reminder Components into Study Page:** Update the Study page to show reminder management UI.
     *   **File:** `src/app/study/page.tsx`
     *   **Action:** Replace the entire file content with the following code.
     ```tsx
