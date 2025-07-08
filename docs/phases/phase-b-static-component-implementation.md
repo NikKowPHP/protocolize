@@ -301,7 +301,7 @@ This plan systematically builds all the necessary UI components for the "Protoco
 ---
 ### 5. Tracking & Analytics Components
 
--   [ ] **Task 5.1: Create `AdherenceCalendar` Component:** Create a static calendar view to mock protocol adherence.
+-   [x] **Task 5.1: Create `AdherenceCalendar` Component:** Create a static calendar view to mock protocol adherence.
     *   **File:** `src/components/adherence-calendar.tsx`
     *   **Action:** Create the file with the following content.
     ```tsx
