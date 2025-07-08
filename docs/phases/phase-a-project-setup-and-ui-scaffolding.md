@@ -412,7 +412,7 @@ Here is the complete and refined `phase-a-project-setup-and-ui-scaffolding.md` f
         }
         ```
 
--   [ ] **Task 4.3: Create Study Page:**
+-   [x] **Task 4.3: Create Study Page:**
     *   **Command:** `mkdir -p src/app/study`
     *   **File:** `src/app/study/page.tsx`
     *   **Content:**
