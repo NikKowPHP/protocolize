@@ -404,7 +404,7 @@ This plan systematically builds all the necessary UI components for the "Protoco
 ---
 ### 6. Monetization and Settings Components
 
--   [ ] **Task 6.1: Create `PricingTable` Component:** Create a static pricing table.
+-   [x] **Task 6.1: Create `PricingTable` Component:** Create a static pricing table.
     *   **File:** `src/components/pricing-table.tsx`
     *   **Action:** Create the file with the following content.
     ```tsx
