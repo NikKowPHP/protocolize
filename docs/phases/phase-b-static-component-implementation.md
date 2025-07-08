@@ -12,7 +12,7 @@ This plan systematically builds all the necessary UI components for the "Protoco
 
 ### 1. UI Primitive Installation
 
--   [ ] **Task 1.1: Install `shadcn/ui` Primitives:** Run a single command to add all the necessary, unstyled UI primitives to the codebase. These will be the building blocks for our custom components.
+-   [x] **Task 1.1: Install `shadcn/ui` Primitives:** Run a single command to add all the necessary, unstyled UI primitives to the codebase. These will be the building blocks for our custom components.
     ```bash
     npx shadcn-ui@latest add button card input select table dialog label textarea dropdown-menu
     ```

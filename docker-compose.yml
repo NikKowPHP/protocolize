@@ -6,13 +6,13 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: prepai
+      POSTGRES_DB: protocolize
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
-      - "5433:5432"
+      - "5435:5432"
     networks:
-      - prepai-network
+      - protocolize-network
 
   app:
     build: ./
@@ -21,15 +21,15 @@ services:
       NEXT_PUBLIC_SUPABASE_URL: ${NEXT_PUBLIC_SUPABASE_URL}
       NEXT_PUBLIC_SUPABASE_ANON_KEY: ${NEXT_PUBLIC_SUPABASE_ANON_KEY}
     ports:
-      - "3001:3000"
+      - "3005:3000"
     depends_on:
       - db
     networks:
-      - prepai-network
+      - protocolize-network
 
 volumes:
   postgres_data:
 
 networks:
-  prepai-network:
+  protocolize-network:
     driver: bridge
