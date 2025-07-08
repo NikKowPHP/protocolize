@@ -23,7 +23,7 @@ This phase marks the transition from static UI to a dynamic backend. Its sole fo
 
 ### 2. Seeding Initial Data
 
-- [ ] **Task 2.1: Configure Prisma for Seeding:** Modify the `package.json` file to tell Prisma where to find our seed script.
+- [x] **Task 2.1: Configure Prisma for Seeding:** Modify the `package.json` file to tell Prisma where to find our seed script.
 
   - **File:** `package.json`
   - **Action:** Add the `prisma` block to the JSON file. If it already exists, ensure it matches.
