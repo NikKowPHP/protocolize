@@ -463,7 +463,7 @@ Here is the complete and refined `phase-a-project-setup-and-ui-scaffolding.md` f
         }
         ```
 
--   [ ] **Task 4.6: Create Settings Page:**
+-   [x] **Task 4.6: Create Settings Page:**
     *   **Command:** `mkdir -p src/app/settings`
     *   **File:** `src/app/settings/page.tsx`
     *   **Content:**
