@@ -342,7 +342,7 @@ This plan systematically builds all the necessary UI components for the "Protoco
     };
     ```
 
--   [ ] **Task 5.2: Create `AnalyticsCharts` Component:** Create a static chart component using `recharts`.
+-   [x] **Task 5.2: Create `AnalyticsCharts` Component:** Create a static chart component using `recharts`.
     *   **File:** `src/components/analytics-charts.tsx`
     *   **Action:** Create the file with the following content.
     ```tsx
