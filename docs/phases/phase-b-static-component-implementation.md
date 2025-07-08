@@ -235,7 +235,7 @@ This plan systematically builds all the necessary UI components for the "Protoco
     };
     ```
 
--   [ ] **Task 4.2: Create `ReminderList` Component:** Create a component to display a list of existing reminders using mock data.
+-   [x] **Task 4.2: Create `ReminderList` Component:** Create a component to display a list of existing reminders using mock data.
     *   **File:** `src/components/reminder-list.tsx`
     *   **Action:** Create the file with the following content.
     ```tsx
