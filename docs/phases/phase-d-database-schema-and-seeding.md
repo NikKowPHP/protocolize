@@ -116,7 +116,7 @@ This phase marks the transition from static UI to a dynamic backend. Its sole fo
     });
   ```
 
-- [ ] **Task 2.4: Create the Plan Seeder:** Create a dedicated seeder for subscription plans.
+- [x] **Task 2.4: Create the Plan Seeder:** Create a dedicated seeder for subscription plans.
 
   - **Command:** `mkdir -p prisma/seeders`
   - **File:** `prisma/seeders/plans.ts`
