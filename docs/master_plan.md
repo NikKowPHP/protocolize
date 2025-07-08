@@ -12,7 +12,7 @@ This document outlines the high-level, phased plan for building the Protocolize 
 
 ---
 
-### `[ ]` Phase B: Static Component Implementation
+### `[x]` Phase B: Static Component Implementation
 
 **Goal:** Systematically build all new, static, reusable components required by the Protocolize epics (e.g., Journal Editor, SRS Flashcard, Analytics Charts), integrating them into the scaffolded pages from Phase A. **This phase will use mock/hardcoded data for UI development purposes.**
 
