@@ -152,7 +152,7 @@ This plan systematically builds all the necessary UI components for the "Protoco
     };
     ```
 
--   [ ] **Task 3.3: Integrate Note Components into Journal Page:** Update the Journal page to show the note-taking UI.
+-   [x] **Task 3.3: Integrate Note Components into Journal Page:** Update the Journal page to show the note-taking UI.
     *   **File:** `src/app/journal/page.tsx`
     *   **Action:** Replace the entire file content with the following code.
     ```tsx
