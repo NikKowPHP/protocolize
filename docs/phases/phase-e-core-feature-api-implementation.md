@@ -534,7 +534,7 @@ This plan is meticulously crafted to eliminate all ambiguities and "lazy comment
 
 ### 5. Push Subscription API
 
-- [ ] **Task 5.1: Implement Push Subscription Management API:** Create the endpoint for saving and deleting a user's web push subscription object.
+- [x] **Task 5.1: Implement Push Subscription Management API:** Create the endpoint for saving and deleting a user's web push subscription object.
 
   - **Command:** `mkdir -p src/app/api/push-subscription`
   - **File:** `src/app/api/push-subscription/route.ts`
