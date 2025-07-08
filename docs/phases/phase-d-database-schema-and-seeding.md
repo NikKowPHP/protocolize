@@ -260,7 +260,7 @@ This phase marks the transition from static UI to a dynamic backend. Its sole fo
 
 ### 3. Verification
 
-- [ ] **Task 3.1: Verify Data with Prisma Studio:** Open Prisma Studio to visually inspect the database and confirm that the `Plan` and `Protocol` tables have been populated correctly.
+- [x] **Task 3.1: Verify Data with Prisma Studio:** Open Prisma Studio to visually inspect the database and confirm that the `Plan` and `Protocol` tables have been populated correctly.
   ```bash
   npx prisma studio
   ```
