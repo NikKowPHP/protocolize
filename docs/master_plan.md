@@ -36,7 +36,7 @@ This document outlines the high-level, phased plan for building the Protocolize 
 
 ---
 
-### `[ ]` Phase E: Core Feature API Implementation
+### `[x]` Phase E: Core Feature API Implementation
 
 **Goal:** Build the essential backend API routes for all core user-facing features. This includes the complete business logic and CRUD operations for **Notes, Reminders, and Protocol Tracking**, with all routes protected by Supabase authentication.
 
