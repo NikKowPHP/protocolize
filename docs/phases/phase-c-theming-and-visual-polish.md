@@ -113,7 +113,7 @@ This plan is now fully explicit, removing any ambiguity. It contains the complet
     }
     ```
 
--   [ ] **Task 1.3: Integrate `ThemeProvider` into Root Layout:** Wrap the entire application in the new `ThemeProvider`.
+-   [x] **Task 1.3: Integrate `ThemeProvider` into Root Layout:** Wrap the entire application in the new `ThemeProvider`.
     *   **File:** `src/app/layout.tsx`
     *   **Action:** Import the `ThemeProvider` and use it to wrap the `AuthProvider` and its children.
     ```tsx
@@ -154,7 +154,7 @@ This plan is now fully explicit, removing any ambiguity. It contains the complet
     }
     ```
 
--   [ ] **Task 1.4: Create the `ThemeToggle` Component:** Create the UI control that allows users to switch between light, dark, and system themes.
+-   [x] **Task 1.4: Create the `ThemeToggle` Component:** Create the UI control that allows users to switch between light, dark, and system themes.
     *   **File:** `src/components/theme-toggle.tsx`
     *   **Action:** Create the file with the following content.
     ```tsx
