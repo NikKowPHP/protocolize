@@ -258,7 +258,7 @@ This is a comprehensive phase focused on the frontend. It involves removing all 
   };
   ```
 
-- [ ] **Task 3.2: Refactor `NoteList` to be Dynamic:** Update the component to fetch, display, and handle deletion of notes.
+- [x] **Task 3.2: Refactor `NoteList` to be Dynamic:** Update the component to fetch, display, and handle deletion of notes.
 
   - **File:** `src/components/note-list.tsx`
   - **Action:** Replace the entire file with the following dynamic version.

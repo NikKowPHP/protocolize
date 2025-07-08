@@ -1,42 +1,61 @@
+'use client';
+
+import { useQuery } from '@tanstack/react-query';
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-  CardDescription,
 } from '@/components/ui/card';
+import { getNotesForEpisode } from '@/lib/api/notes';
+import { formatDistanceToNow } from 'date-fns';
 
-const MOCK_NOTES = [
-  {
-    id: 'n1',
-    content:
-      'Key takeaway: the timing of light exposure is critical for anchoring the circadian rhythm.',
-    createdAt: '2 days ago',
-  },
-  {
-    id: 'n2',
-    content:
-      'Need to remember that the cold stimulus should be enough to be uncomfortable but not so much that it causes shivering.',
-    createdAt: '1 day ago',
-  },
-];
+export const NoteList = ({ episodeId }: { episodeId: string }) => {
+  const {
+    data: notes,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ['notes', episodeId],
+    queryFn: () => getNotesForEpisode(episodeId),
+    enabled: !!episodeId, // Only fetch if episodeId is provided
+  });
 
-export const NoteList = () => {
+  if (!episodeId) {
+    return (
+      <div className="text-center text-muted-foreground p-4">
+        Select an episode to see your notes.
+      </div>
+    );
+  }
+
+  if (isLoading) return <div>Loading notes...</div>;
+  if (isError) {
+    return <div className="text-red-500">Failed to load notes.</div>;
+  }
+
   return (
     <Card>
       <CardHeader>
         <CardTitle>Your Notes</CardTitle>
-        <CardDescription>
-          Review your previous notes and insights
-        </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
-        {MOCK_NOTES.map((note) => (
-          <div key={note.id} className="border-l-4 border-blue-500 pl-4">
-            <p className="text-sm text-muted-foreground">{note.createdAt}</p>
-            <p className="mt-1">{note.content}</p>
-          </div>
-        ))}
+        {notes && notes.length > 0 ? (
+          notes.map((note) => (
+            <div key={note.id} className="p-3 bg-muted/50 rounded-md">
+              <p className="text-sm text-foreground">{note.content}</p>
+              <p className="text-xs text-muted-foreground mt-2">
+                {formatDistanceToNow(new Date(note.createdAt), {
+                  addSuffix: true,
+                })}
+              </p>
+            </div>
+          ))
+        ) : (
+          <p className="text-muted-foreground">
+            No notes for this episode yet.
+          </p>
+        )}
       </CardContent>
     </Card>
   );

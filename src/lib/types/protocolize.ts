@@ -9,6 +9,15 @@ export interface Protocol {
   status: string;
 }
 
+export interface Note {
+  id: string;
+  userId: string;
+  episodeId: string;
+  content: string;
+  isPublic: boolean;
+  createdAt: string;
+}
+
 export interface Summary {
   id: string;
   content: string;
