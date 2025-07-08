@@ -481,6 +481,11 @@ This plan is meticulously crafted to eliminate all ambiguities and "lazy comment
       );
     }
   }
+
+- [x] **Task 3.2: Implement Tracking Update and Delete API:** Create the dynamic API route for individual tracking logs with `PUT` and `DELETE` handlers.
+  - **Command:** `mkdir -p src/app/api/tracking/[logId]`
+  - **File:** `src/app/api/tracking/[logId]/route.ts`
+  - **Action:** Create the file with complete, ownership-verified logic for updating and deleting tracking logs.
   ```
 
 ---
