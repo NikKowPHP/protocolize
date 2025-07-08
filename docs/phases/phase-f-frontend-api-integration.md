@@ -93,7 +93,7 @@ This is a comprehensive phase focused on the frontend. It involves removing all 
 
 ### 2. Core Content Integration (Protocols & Episodes)
 
-- [ ] **Task 2.1: Define Content Types:** Create a types file for our core content models.
+- [x] **Task 2.1: Define Content Types:** Create a types file for our core content models.
 
   - **Command:** `mkdir -p src/lib/types`
   - **File:** `src/lib/types/protocolize.ts`
