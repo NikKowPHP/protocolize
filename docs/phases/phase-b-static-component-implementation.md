@@ -1,12 +1,12 @@
 Of course. Here is the detailed, atomic to-do list for Phase B, formatted as `phase-b-static-component-implementation.md`.
 
-This plan systematically builds all the necessary UI components for the "Protocolize" application. It follows the principle of creating reusable components first and then integrating them into the placeholder pages that were scaffolded in Phase A. All components in this phase are static and use mock/hardcoded data.
+This plan systematically builds all the necessary UI components for the "Protocolize" application. It follows the principle of creating reusable components first and then integrating them into the placeholder pages that were scaffolded in Phase A. All components in this phase are static and use mock/hardcoded data, as per the phase goal.
 
 ---
 
 # **Phase B: Static Component Implementation**
 
-**Goal:** Systematically build all new, static, reusable components required by the Protocolize epics (e.g., Journal Editor, SRS Flashcard, Analytics Charts), integrating them into the scaffolded pages from Phase A. This phase will use mock/hardcoded data for UI development purposes.
+**Goal:** Systematically build all new, static, reusable components required by the Protocolize epics (e.g., Note Editor, Reminder Form, Analytics Charts), integrating them into the scaffolded pages from Phase A. This phase will use mock/hardcoded data for UI development purposes.
 
 ---
 
@@ -14,7 +14,7 @@ This plan systematically builds all the necessary UI components for the "Protoco
 
 -   [ ] **Task 1.1: Install `shadcn/ui` Primitives:** Run a single command to add all the necessary, unstyled UI primitives to the codebase. These will be the building blocks for our custom components.
     ```bash
-    npx shadcn-ui@latest add button card input select table dialog label textarea
+    npx shadcn-ui@latest add button card input select table dialog label textarea dropdown-menu
     ```
 
 ---
@@ -37,13 +37,13 @@ This plan systematically builds all the necessary UI components for the "Protoco
     export const ProtocolCard = ({ id, name, category, description }: ProtocolCardProps) => {
       return (
         <Link href={`/protocols/${id}`} passHref>
-          <Card className="hover:border-blue-500 hover:shadow-lg transition-all cursor-pointer">
+          <Card className="hover:border-primary hover:shadow-lg transition-all cursor-pointer h-full flex flex-col">
             <CardHeader>
               <CardTitle className="text-xl">{name}</CardTitle>
               <CardDescription>{category}</CardDescription>
             </CardHeader>
-            <CardContent>
-              <p className="text-gray-600 dark:text-gray-400">{description}</p>
+            <CardContent className="flex-grow">
+              <p className="text-muted-foreground">{description}</p>
             </CardContent>
           </Card>
         </Link>
@@ -93,9 +93,106 @@ This plan systematically builds all the necessary UI components for the "Protoco
     ```
 
 ---
-### 3. Epic 3: Reminder Components
+### 3. Journal & Note-Taking Components
 
--   [ ] **Task 3.1: Create `ReminderForm` Component:** Create a static form for adding or editing a reminder.
+-   [ ] **Task 3.1: Create `NoteEditor` Component:** Create a simple editor component for writing notes.
+    *   **File:** `src/components/note-editor.tsx`
+    *   **Action:** Create the file with the following content.
+    ```tsx
+    import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+    import { Label } from "@/components/ui/label";
+    import { Textarea } from "@/components/ui/textarea";
+    import { Button } from "@/components/ui/button";
+
+    export const NoteEditor = ({ episodeTitle }: { episodeTitle: string }) => {
+      return (
+        <Card>
+          <CardHeader>
+            <CardTitle>New Note for: {episodeTitle}</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div>
+              <Label htmlFor="note-content" className="sr-only">Note Content</Label>
+              <Textarea id="note-content" placeholder="Write your thoughts and takeaways here..." rows={10} />
+            </div>
+            <Button className="w-full">Save Note</Button>
+          </CardContent>
+        </Card>
+      );
+    };
+    ```
+
+-   [ ] **Task 3.2: Create `NoteList` Component:** Create a component to display a list of notes for an episode.
+    *   **File:** `src/components/note-list.tsx`
+    *   **Action:** Create the file with the following content.
+    ```tsx
+    import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+
+    const MOCK_NOTES = [
+      { id: "n1", content: "Key takeaway: the timing of light exposure is critical for anchoring the circadian rhythm.", createdAt: "2 days ago" },
+      { id: "n2", content: "Need to remember that the cold stimulus should be enough to be uncomfortable but not so much that it causes shivering.", createdAt: "1 day ago" },
+    ];
+
+    export const NoteList = () => {
+      return (
+        <Card>
+          <CardHeader>
+            <CardTitle>Your Notes</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {MOCK_NOTES.map(note => (
+              <div key={note.id} className="p-3 bg-muted/50 rounded-md">
+                <p className="text-sm text-foreground">{note.content}</p>
+                <p className="text-xs text-muted-foreground mt-2">{note.createdAt}</p>
+              </div>
+            ))}
+          </CardContent>
+        </Card>
+      );
+    };
+    ```
+
+-   [ ] **Task 3.3: Integrate Note Components into Journal Page:** Update the Journal page to show the note-taking UI.
+    *   **File:** `src/app/journal/page.tsx`
+    *   **Action:** Replace the entire file content with the following code.
+    ```tsx
+    import { NoteEditor } from '@/components/note-editor';
+    import { NoteList } from '@/components/note-list';
+    import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+    import React from 'react';
+
+    export default function JournalPage() {
+      return (
+        <div className="container mx-auto p-4 md:p-8">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+            <h1 className="text-3xl font-bold">My Journal</h1>
+            <div className="w-full md:w-72">
+                <Select defaultValue="1">
+                    <SelectTrigger>
+                        <SelectValue placeholder="Select an episode or protocol..." />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value="1">Foundational Fitness & Health Protocols</SelectItem>
+                        <SelectItem value="2">Using Light to Optimize Health</SelectItem>
+                        <SelectItem value="3">The Science of Setting & Achieving Goals</SelectItem>
+                    </SelectContent>
+                </Select>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <NoteEditor episodeTitle="Foundational Fitness & Health Protocols" />
+            <NoteList />
+          </div>
+        </div>
+      );
+    }
+    ```
+
+---
+### 4. Study & Reminder Components
+
+-   [ ] **Task 4.1: Create `ReminderForm` Component:** Create a static form for adding or editing a reminder.
     *   **File:** `src/components/reminder-form.tsx`
     *   **Action:** Create the file with the following content.
     ```tsx
@@ -138,7 +235,7 @@ This plan systematically builds all the necessary UI components for the "Protoco
     };
     ```
 
--   [ ] **Task 3.2: Create `ReminderList` Component:** Create a component to display a list of existing reminders using mock data.
+-   [ ] **Task 4.2: Create `ReminderList` Component:** Create a component to display a list of existing reminders using mock data.
     *   **File:** `src/components/reminder-list.tsx`
     *   **Action:** Create the file with the following content.
     ```tsx
@@ -159,10 +256,10 @@ This plan systematically builds all the necessary UI components for the "Protoco
           <CardContent>
             <ul className="space-y-3">
               {MOCK_REMINDERS.map(reminder => (
-                <li key={reminder.id} className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-800 rounded-md">
+                <li key={reminder.id} className="flex justify-between items-center p-3 bg-muted/50 rounded-md">
                   <div>
                     <p className="font-semibold">{reminder.protocolName}</p>
-                    <p className="text-sm text-gray-500">{`Scheduled for ${reminder.time}`}</p>
+                    <p className="text-sm text-muted-foreground">{`Scheduled for ${reminder.time}`}</p>
                   </div>
                   <Button variant="ghost" size="sm">Edit</Button>
                 </li>
@@ -174,7 +271,7 @@ This plan systematically builds all the necessary UI components for the "Protoco
     };
     ```
 
--   [ ] **Task 3.3: Integrate Reminder Components into Study Page:** Update the Study page to show reminder management UI.
+-   [ ] **Task 4.3: Integrate Reminder Components into Study Page:** Update the Study page to show reminder management UI.
     *   **File:** `src/app/study/page.tsx`
     *   **Action:** Replace the entire file content with the following code.
     ```tsx
@@ -202,15 +299,14 @@ This plan systematically builds all the necessary UI components for the "Protoco
     ```
 
 ---
-### 4. Epic 4: Tracking & Analytics Components
+### 5. Tracking & Analytics Components
 
--   [ ] **Task 4.1: Create `AdherenceCalendar` Component:** Create a static calendar view to mock protocol adherence.
+-   [ ] **Task 5.1: Create `AdherenceCalendar` Component:** Create a static calendar view to mock protocol adherence.
     *   **File:** `src/components/adherence-calendar.tsx`
     *   **Action:** Create the file with the following content.
     ```tsx
     import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
     
-    // Simple mock data for demonstration
     const MOCK_DAYS = Array.from({ length: 35 }, (_, i) => {
       const day = i - 5;
       const completed = day > 0 && Math.random() > 0.4;
@@ -224,19 +320,19 @@ This plan systematically builds all the necessary UI components for the "Protoco
             <CardTitle>Adherence Calendar</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-7 gap-2">
-              {["S", "M", "T", "W", "T", "F", "S"].map(day => (
-                <div key={day} className="font-bold text-center text-xs text-gray-500">{day}</div>
+            <div className="grid grid-cols-7 gap-2 text-center">
+              {["S", "M", "T", "W", "T", "F", "S"].map((day, i) => (
+                <div key={i} className="font-bold text-xs text-muted-foreground">{day}</div>
               ))}
               {MOCK_DAYS.map(({ day, completed }, index) => (
                 <div
                   key={index}
-                  className={`w-full h-10 rounded flex items-center justify-center text-sm ${
-                    day <= 0 ? "bg-gray-100 dark:bg-gray-800" :
-                    completed ? "bg-green-500 text-white" : "bg-gray-200 dark:bg-gray-700"
+                  className={`w-full aspect-square rounded-md flex items-center justify-center text-sm ${
+                    day <= 0 ? "bg-muted/30" :
+                    completed ? "bg-green-500 text-primary-foreground" : "bg-muted"
                   }`}
                 >
-                  {day > 0 && day}
+                  {day > 0 ? day : ""}
                 </div>
               ))}
             </div>
@@ -246,7 +342,7 @@ This plan systematically builds all the necessary UI components for the "Protoco
     };
     ```
 
--   [ ] **Task 4.2: Create `AnalyticsCharts` Component:** Create a static chart component using `recharts`.
+-   [ ] **Task 5.2: Create `AnalyticsCharts` Component:** Create a static chart component using `recharts`.
     *   **File:** `src/components/analytics-charts.tsx`
     *   **Action:** Create the file with the following content.
     ```tsx
@@ -272,10 +368,10 @@ This plan systematically builds all the necessary UI components for the "Protoco
               <BarChart data={MOCK_DATA}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="name" />
-                <YAxis allowDecimals={false} />
+                <YAxis allowDecimals={false} domain={[0, 7]} />
                 <Tooltip />
                 <Legend />
-                <Bar dataKey="adherence" fill="#3b82f6" />
+                <Bar dataKey="adherence" fill="hsl(var(--primary))" />
               </BarChart>
             </ResponsiveContainer>
           </CardContent>
@@ -284,7 +380,7 @@ This plan systematically builds all the necessary UI components for the "Protoco
     };
     ```
 
--   [ ] **Task 4.3: Integrate Analytics Components into Analytics Page:** Update the Analytics page.
+-   [ ] **Task 5.3: Integrate Analytics Components into Analytics Page:** Update the Analytics page.
     *   **File:** `src/app/analytics/page.tsx`
     *   **Action:** Replace the entire file content with the following code.
     ```tsx
@@ -306,9 +402,9 @@ This plan systematically builds all the necessary UI components for the "Protoco
     ```
 
 ---
-### 5. Epic 5: Monetization Component
+### 6. Monetization and Settings Components
 
--   [ ] **Task 5.1: Create `PricingTable` Component:** Create a static pricing table comparing the Free and Premium tiers.
+-   [ ] **Task 6.1: Create `PricingTable` Component:** Create a static pricing table.
     *   **File:** `src/components/pricing-table.tsx`
     *   **Action:** Create the file with the following content.
     ```tsx
@@ -319,7 +415,7 @@ This plan systematically builds all the necessary UI components for the "Protoco
     const Feature = ({ children }: { children: React.ReactNode }) => (
       <li className="flex items-center space-x-2">
         <CheckCircle className="h-5 w-5 text-green-500" />
-        <span className="text-gray-700 dark:text-gray-300">{children}</span>
+        <span className="text-muted-foreground">{children}</span>
       </li>
     );
 
@@ -339,15 +435,15 @@ This plan systematically builds all the necessary UI components for the "Protoco
                 <Feature>Pre-set foundational reminders</Feature>
                 <Feature>Basic personal notes</Feature>
               </ul>
-              <Button variant="outline" className="w-full">Your Current Plan</Button>
+              <Button variant="outline" className="w-full" disabled>Your Current Plan</Button>
             </CardContent>
           </Card>
           {/* Premium Tier */}
-          <Card className="border-blue-500">
+          <Card className="border-primary">
             <CardHeader className="text-center">
               <CardTitle className="text-2xl">Premium</CardTitle>
               <CardDescription>Unlock your full potential</CardDescription>
-              <p className="text-4xl font-bold mt-2">$7<span className="text-lg font-normal text-gray-500">/mo</span></p>
+              <p className="text-4xl font-bold mt-2">$7<span className="text-lg font-normal text-muted-foreground">/mo</span></p>
             </CardHeader>
             <CardContent className="space-y-4">
               <ul className="space-y-2">
@@ -365,7 +461,7 @@ This plan systematically builds all the necessary UI components for the "Protoco
     };
     ```
 
--   [ ] **Task 5.2: Integrate `PricingTable` into Pricing Page:** Update the Pricing page.
+-   [ ] **Task 6.2: Integrate `PricingTable` into Pricing Page:** Update the Pricing page.
     *   **File:** `src/app/pricing/page.tsx`
     *   **Action:** Replace the entire file content with the following code.
     ```tsx
@@ -377,7 +473,7 @@ This plan systematically builds all the necessary UI components for the "Protoco
         <div className="container mx-auto p-4 md:p-8">
           <div className="max-w-3xl mx-auto text-center">
             <h1 className="text-4xl font-bold mb-4">Choose Your Plan</h1>
-            <p className="text-lg text-gray-600 dark:text-gray-400 mb-8">
+            <p className="text-lg text-muted-foreground mb-8">
               Start for free, and upgrade when you're ready to take your implementation to the next level.
             </p>
           </div>
@@ -389,12 +485,9 @@ This plan systematically builds all the necessary UI components for the "Protoco
     }
     ```
 
----
-### 6. Epic 1 & User Settings Integration
-
--   [ ] **Task 6.1: Create `UserProfileForm` Component:** Create a static form for updating user profile information.
-    *   **File:** `src/components/user-profile-form.tsx`
-    *   **Action:** Create the file with the following content.
+-   [ ] **Task 6.3: Create `UserProfileForm` and `SubscriptionManagement` Components:**
+    *   **File:** `src/components/user-settings-forms.tsx`
+    *   **Action:** Create a single file for both settings components.
     ```tsx
     import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
     import { Label } from "@/components/ui/label";
@@ -422,14 +515,6 @@ This plan systematically builds all the necessary UI components for the "Protoco
         </Card>
       );
     };
-    ```
-
--   [ ] **Task 6.2: Create `SubscriptionManagement` Component:** Create a static component for managing subscriptions.
-    *   **File:** `src/components/subscription-management.tsx`
-    *   **Action:** Create the file with the following content.
-    ```tsx
-    import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-    import { Button } from "@/components/ui/button";
 
     export const SubscriptionManagement = () => {
       return (
@@ -439,21 +524,19 @@ This plan systematically builds all the necessary UI components for the "Protoco
             <CardDescription>Manage your billing and subscription details.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <p>You are currently on the <span className="font-semibold text-blue-500">Premium Plan</span>.</p>
-            <p className="text-sm text-gray-500">Your subscription will renew on July 31, 2024.</p>
+            <p>You are currently on the <span className="font-semibold text-primary">Premium Plan</span>.</p>
+            <p className="text-sm text-muted-foreground">Your subscription will renew on July 31, 2024.</p>
             <Button>Manage Billing</Button>
           </CardContent>
         </Card>
       );
     };
     ```
-
--   [ ] **Task 6.3: Integrate User Components into Settings Page:** Update the Settings page.
+-   [ ] **Task 6.4: Integrate User Components into Settings Page:** Update the Settings page.
     *   **File:** `src/app/settings/page.tsx`
     *   **Action:** Replace the entire file content with the following code.
     ```tsx
-    import { SubscriptionManagement } from '@/components/subscription-management';
-    import { UserProfileForm } from '@/components/user-profile-form';
+    import { SubscriptionManagement, UserProfileForm } from '@/components/user-settings-forms';
     import React from 'react';
 
     export default function SettingsPage() {

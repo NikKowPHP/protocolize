@@ -14,159 +14,7 @@ This phase marks the transition from static UI to a dynamic backend. Its sole fo
 
 ### 1. Schema Finalization & Migration
 
--   [ ] **Task 1.1: Finalize Prisma Schema:** Update `prisma/schema.prisma` to include all models and relations, ensuring it perfectly matches the application description document. Specifically, add the `Plan` and `Subscription` models and the many-to-many relation for `Episode` and `Protocol`.
-
-    *   **File:** `prisma/schema.prisma`
-    *   **Action:** Replace the entire file content with the following final schema.
-
-    ```prisma
-    generator client {
-      provider = "prisma-client-js"
-    }
-
-    datasource db {
-      provider = "postgresql"
-      url      = env("DATABASE_URL")
-    }
-
-    model User {
-      id             String    @id @default(uuid())
-      email          String    @unique
-      name           String?
-      supabaseAuthId String    @unique @map("supabase_auth_id")
-
-      stripeCustomerId   String?   @unique @map("stripe_customer_id")
-      subscriptionTier   String    @default("FREE")
-      subscriptionStatus String?   @map("subscription_status")
-
-      createdAt DateTime @default(now()) @map("created_at")
-      updatedAt DateTime @updatedAt @map("updated_at")
-
-      subscriptions     Subscription[]
-      notes             Note[]
-      reminders         UserReminder[]
-      trackingLogs      UserProtocolTracking[]
-      pushSubscriptions PushSubscription[]
-    }
-
-    model Plan {
-      id              String         @id @default(cuid())
-      name            String         @unique
-      description     String?
-      stripeProductId String?        @unique @map("stripe_product_id")
-      isActive        Boolean        @default(true) @map("is_active")
-      createdAt       DateTime       @default(now()) @map("created_at")
-      updatedAt       DateTime       @updatedAt @map("updated_at")
-      subscriptions   Subscription[]
-    }
-
-    model Subscription {
-      id         String    @id @default(cuid())
-      userId     String    @map("user_id")
-      user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-      planId     String    @map("plan_id")
-      plan       Plan      @relation(fields: [planId], references: [id], onDelete: Restrict)
-      status     String
-      provider   String    @default("stripe")
-      providerId String    @unique @map("provider_id")
-      endsAt     DateTime? @map("ends_at")
-      createdAt  DateTime  @default(now()) @map("created_at")
-      updatedAt  DateTime  @updatedAt @map("updated_at")
-    }
-
-    model Episode {
-      id            String    @id @default(cuid())
-      title         String
-      episodeNumber Int?      @map("episode_number")
-      publishedAt   DateTime? @map("published_at")
-      description   String?   @db.Text
-      sourceUrl     String?   @map("source_url")
-      status        String    @default("DRAFT") // DRAFT, PUBLISHED, ARCHIVED
-      createdAt     DateTime  @default(now()) @map("created_at")
-      updatedAt     DateTime  @updatedAt @map("updated_at")
-
-      protocols Protocol[] @relation(map: "EpisodeProtocols")
-      summaries Summary[]
-      notes     Note[]
-    }
-
-    model Protocol {
-      id                  String    @id @default(cuid())
-      name                String
-      description         String    @db.Text
-      category            String?
-      implementationGuide String?   @db.Text @map("implementation_guide")
-      researchLinks       Json?     @map("research_links")
-      isFree              Boolean   @default(false) @map("is_free")
-      status              String    @default("DRAFT") // DRAFT, PUBLISHED
-      createdAt           DateTime  @default(now()) @map("created_at")
-      updatedAt           DateTime  @updatedAt @map("updated_at")
-
-      @@index([name, status])
-      episodes     Episode[]              @relation(map: "EpisodeProtocols")
-      reminders    UserReminder[]
-      trackingLogs UserProtocolTracking[]
-    }
-
-    model Summary {
-      id        String   @id @default(cuid())
-      episodeId String   @map("episode_id")
-      episode   Episode  @relation(fields: [episodeId], references: [id], onDelete: Cascade)
-      content   String   @db.Text
-      type      String   @default("summary")
-      createdAt DateTime @default(now()) @map("created_at")
-      updatedAt DateTime @updatedAt @map("updated_at")
-    }
-
-    model Note {
-      id        String   @id @default(cuid())
-      userId    String   @map("user_id")
-      user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-      episodeId String   @map("episode_id")
-      episode   Episode  @relation(fields: [episodeId], references: [id], onDelete: Cascade)
-      content   String   @db.Text
-      isPublic  Boolean  @default(false) @map("is_public")
-      createdAt DateTime @default(now()) @map("created_at")
-      updatedAt DateTime @updatedAt @map("updated_at")
-    }
-
-    model UserReminder {
-      id           String   @id @default(cuid())
-      userId       String   @map("user_id")
-      user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-      protocolId   String   @map("protocol_id")
-      protocol     Protocol @relation(fields: [protocolId], references: [id], onDelete: Cascade)
-      reminderTime String   @map("reminder_time")
-      timezone     String
-      isActive     Boolean  @default(true) @map("is_active")
-      createdAt    DateTime @default(now()) @map("created_at")
-      updatedAt    DateTime @updatedAt @map("updated_at")
-    }
-
-    model UserProtocolTracking {
-      id         String   @id @default(cuid())
-      userId     String   @map("user_id")
-      user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-      protocolId String   @map("protocol_id")
-      protocol   Protocol @relation(fields: [protocolId], references: [id], onDelete: Cascade)
-      trackedAt  DateTime @map("tracked_at") @db.Date
-      notes      String?  @db.Text
-      createdAt  DateTime @default(now()) @map("created_at")
-
-      @@unique([userId, protocolId, trackedAt])
-    }
-
-    model PushSubscription {
-      id        String   @id @default(cuid())
-      userId    String   @map("user_id")
-      user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-      endpoint  String   @unique
-      keys      Json
-      createdAt DateTime @default(now()) @map("created_at")
-    }
-    ```
-
--   [ ] **Task 1.2: Create Initial Database Migration:** Generate the first migration file based on the final schema. This will create the SQL necessary to build the database structure.
+-   [ ] **Task 1.1: Create Initial Database Migration:** Generate the first migration file based on the final schema defined in Phase A. This will create the SQL necessary to build the database structure.
     ```bash
     npx prisma migrate dev --name init
     ```
@@ -176,7 +24,7 @@ This phase marks the transition from static UI to a dynamic backend. Its sole fo
 
 -   [ ] **Task 2.1: Configure Prisma for Seeding:** Modify the `package.json` file to tell Prisma where to find our seed script.
     *   **File:** `package.json`
-    *   **Action:** Add the `prisma` block to the JSON file.
+    *   **Action:** Add the `prisma` block to the JSON file. If it already exists, ensure it matches.
     ```json
     {
       "name": "protocolize",
@@ -186,9 +34,45 @@ This phase marks the transition from static UI to a dynamic backend. Its sole fo
         "seed": "ts-node --compiler-options '{\\\"module\\\":\\\"CommonJS\\\"}' prisma/seed.ts"
       },
       "scripts": {
-        // ... existing scripts
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "postinstall": "prisma generate",
+        "lint": "next lint",
+        "test": "jest"
       },
-      // ... rest of the file
+      "dependencies": {
+        "@headlessui/react": "^2.1.2",
+        "@prisma/client": "^5.17.0",
+        "@stripe/stripe-js": "^4.1.0",
+        "@supabase/ssr": "^0.4.0",
+        "@supabase/supabase-js": "^2.44.4",
+        "@tanstack/react-query": "^5.51.11",
+        "clsx": "^2.1.1",
+        "date-fns": "^3.6.0",
+        "lucide-react": "^0.414.0",
+        "next": "14.2.5",
+        "next-themes": "^0.3.0",
+        "react": "^18",
+        "react-dom": "^18",
+        "react-hook-form": "^7.52.1",
+        "recharts": "^2.12.7",
+        "tailwind-merge": "^2.4.0",
+        "tailwindcss-animate": "^1.0.7",
+        "zod": "^3.23.8"
+      },
+      "devDependencies": {
+        "@types/node": "^20",
+        "@types/react": "^18",
+        "@types/react-dom": "^18",
+        "eslint": "^8",
+        "eslint-config-next": "14.2.5",
+        "postcss": "^8",
+        "prisma": "^5.17.0",
+        "tailwindcss": "^3.4.1",
+        "ts-node": "^10.9.2",
+        "typescript": "^5"
+      }
     }
     ```
 
@@ -254,7 +138,8 @@ This phase marks the transition from static UI to a dynamic backend. Its sole fo
           name: 'Premium',
           description: 'Unlock your full potential',
           // IMPORTANT: Replace with your actual Stripe Product ID in production
-          stripeProductId: 'prod_YOUR_PREMIUM_PRODUCT_ID', 
+          // For now, we use a placeholder. This will be configured via env vars later.
+          stripeProductId: 'prod_placeholder_premium', 
           isActive: true,
         },
       });
@@ -297,7 +182,6 @@ This phase marks the transition from static UI to a dynamic backend. Its sole fo
     export async function seedProtocolsAndEpisodes(prisma: PrismaClient) {
       console.log('Seeding foundational protocols and a placeholder episode...');
 
-      // Create a placeholder episode to associate protocols with
       const episode = await prisma.episode.upsert({
         where: { sourceUrl: 'https://www.hubermanlab.com/episode/foundational-fitness-protocols' },
         update: {},
@@ -313,22 +197,35 @@ This phase marks the transition from static UI to a dynamic backend. Its sole fo
 
       for (const protocolData of foundationalProtocols) {
         const protocol = await prisma.protocol.upsert({
-          where: { name: protocolData.name }, // This assumes names are unique for published, free protocols
+          where: { name: protocolData.name },
           update: { ...protocolData },
           create: { ...protocolData },
         });
 
-        // Link protocol to the episode
-        await prisma.episode.update({
-          where: { id: episode.id },
-          data: {
-            protocols: {
-              connect: {
-                id: protocol.id
-              }
+        // Check if relation already exists before creating
+        const existingRelation = await prisma.episode.findFirst({
+            where: {
+                id: episode.id,
+                protocols: {
+                    some: {
+                        id: protocol.id
+                    }
+                }
             }
-          }
         });
+        
+        if (!existingRelation) {
+            await prisma.episode.update({
+              where: { id: episode.id },
+              data: {
+                protocols: {
+                  connect: {
+                    id: protocol.id,
+                  },
+                },
+              },
+            });
+        }
       }
     }
     ```
