@@ -98,7 +98,7 @@ This plan is now fully explicit, removing any ambiguity. It contains the complet
     export default config
     ```
 
--   [ ] **Task 1.2: Create a `ThemeProvider` Component:** Create a new client component that wraps the `next-themes` provider to avoid hydration errors with server components.
+-   [x] **Task 1.2: Create a `ThemeProvider` Component:** Create a new client component that wraps the `next-themes` provider to avoid hydration errors with server components.
     *   **File:** `src/components/theme-provider.tsx`
     *   **Action:** Create the file with the following content.
     ```tsx
