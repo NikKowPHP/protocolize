@@ -14,7 +14,7 @@ Let's generate the complete, correct, and fully explicit plan for **Phase G**. T
 
 ### 1. Stripe SDK and Configuration
 
-- [ ] **Task 1.1: Install Stripe Server-Side Library:** Install the official Stripe Node.js library for backend operations.
+- [x] **Task 1.1: Install Stripe Server-Side Library:** Install the official Stripe Node.js library for backend operations.
 
   ```bash
   npm install stripe
