@@ -380,7 +380,7 @@ This plan systematically builds all the necessary UI components for the "Protoco
     };
     ```
 
--   [ ] **Task 5.3: Integrate Analytics Components into Analytics Page:** Update the Analytics page.
+-   [x] **Task 5.3: Integrate Analytics Components into Analytics Page:** Update the Analytics page.
     *   **File:** `src/app/analytics/page.tsx`
     *   **Action:** Replace the entire file content with the following code.
     ```tsx
