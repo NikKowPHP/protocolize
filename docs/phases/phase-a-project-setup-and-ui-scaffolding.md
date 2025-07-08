@@ -395,7 +395,7 @@ Here is the complete and refined `phase-a-project-setup-and-ui-scaffolding.md` f
     }
     ```
 
--   [ ] **Task 4.2: Create Journal Page:**
+-   [x] **Task 4.2: Create Journal Page:**
     *   **Command:** `mkdir -p src/app/journal`
     *   **File:** `src/app/journal/page.tsx`
     *   **Content:**
