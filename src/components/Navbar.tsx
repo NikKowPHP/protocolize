@@ -12,13 +12,15 @@ const Navbar: React.FC = () => {
     return (
         <header className="bg-gray-800 text-white p-4 sticky top-0 z-50">
             <div className="container mx-auto flex justify-between items-center">
-                <Link href="/" className="text-lg font-bold" onClick={closeMenu}>PrepAI</Link>
+                <Link href="/" className="text-lg font-bold" onClick={closeMenu}>Protocolize</Link>
                 
                 {/* Desktop Menu */}
                 <div className="hidden md:flex space-x-4 items-center">
                     <Link href="/dashboard" className="hover:underline">Dashboard</Link>
-                    <Link href="/questions" className="hover:underline">Practice</Link>
-                    <Link href="/generate" className="hover:underline">Generate</Link>
+                    <Link href="/journal" className="hover:underline">Journal</Link>
+                    <Link href="/study" className="hover:underline">Study</Link>
+                    <Link href="/analytics" className="hover:underline">Analytics</Link>
+                    <Link href="/pricing" className="hover:underline">Pricing</Link>
                     <AuthLinks />
                 </div>
                 
@@ -33,17 +35,21 @@ const Navbar: React.FC = () => {
             </div>
             
             {/* Mobile Menu */}
-            <div className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-screen pt-4' : 'max-h-0'}`}>
-                <div className="flex flex-col space-y-4">
-                    <Link href="/dashboard" className="hover:underline block px-2 py-1" onClick={closeMenu}>Dashboard</Link>
-                    <Link href="/questions" className="hover:underline block px-2 py-1" onClick={closeMenu}>Practice</Link>
-                    <Link href="/generate" className="hover:underline block px-2 py-1" onClick={closeMenu}>Generate</Link>
-                    <div className="border-t border-gray-700 my-2"></div>
-                    <div className="px-2 py-1 flex flex-col space-y-4 items-start">
-                        <AuthLinks />
+            {isOpen && (
+                <div className="md:hidden pt-4">
+                    <div className="flex flex-col space-y-4">
+                        <Link href="/dashboard" className="hover:underline block px-2 py-1" onClick={closeMenu}>Dashboard</Link>
+                        <Link href="/journal" className="hover:underline block px-2 py-1" onClick={closeMenu}>Journal</Link>
+                        <Link href="/study" className="hover:underline block px-2 py-1" onClick={closeMenu}>Study</Link>
+                        <Link href="/analytics" className="hover:underline block px-2 py-1" onClick={closeMenu}>Analytics</Link>
+                        <Link href="/pricing" className="hover:underline block px-2 py-1" onClick={closeMenu}>Pricing</Link>
+                        <div className="border-t border-gray-700 my-2"></div>
+                        <div className="px-2 py-1 flex flex-col space-y-4 items-start">
+                            <AuthLinks />
+                        </div>
                     </div>
                 </div>
-            </div>
+            )}
         </header>
     );
 };

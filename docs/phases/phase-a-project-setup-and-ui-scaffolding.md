@@ -229,7 +229,7 @@ Here is the complete and refined `phase-a-project-setup-and-ui-scaffolding.md` f
     }
     ```
 
--   [ ] **Task 3.2: Update Main Navigation Bar:** Modify `src/components/Navbar.tsx` to change the branding to "Protocolize" and update the navigation links.
+-   [x] **Task 3.2: Update Main Navigation Bar:** Modify `src/components/Navbar.tsx` to change the branding to "Protocolize" and update the navigation links.
     *   **File:** `src/components/Navbar.tsx`
     *   **Action:** Replace the entire content of the file with the following code.
     ```tsx
