@@ -485,7 +485,7 @@ This plan systematically builds all the necessary UI components for the "Protoco
     }
     ```
 
--   [ ] **Task 6.3: Create `UserProfileForm` and `SubscriptionManagement` Components:**
+-   [x] **Task 6.3: Create `UserProfileForm` and `SubscriptionManagement` Components:**
     *   **File:** `src/components/user-settings-forms.tsx`
     *   **Action:** Create a single file for both settings components.
     ```tsx
