@@ -3,7 +3,10 @@ import { prisma } from './db';
 import type { AuthResponse, AuthError } from '@supabase/supabase-js';
 import { ensureUserInDb } from './user';
 
-export async function signUp(email: string, password: string): Promise<AuthResponse> {
+export async function signUp(
+  email: string,
+  password: string,
+): Promise<AuthResponse> {
   const supabase = await createClient();
   const { data, error } = await supabase.auth.signUp({ email, password });
 
@@ -15,8 +18,8 @@ export async function signUp(email: string, password: string): Promise<AuthRespo
     try {
       await ensureUserInDb(data.user);
     } catch (dbError: any) {
-      console.error("Failed to create user profile in local DB:", dbError);
-      
+      console.error('Failed to create user profile in local DB:', dbError);
+
       const customError = {
         name: 'DatabaseError',
         message: 'Could not create user profile.',

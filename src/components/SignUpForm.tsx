@@ -2,7 +2,11 @@ import React from 'react';
 import { useState } from 'react';
 import { supabase } from '../lib/supabase/client';
 import AuthErrorDisplay from './AuthErrorDisplay';
-import { validateEmail, validatePassword, calculatePasswordStrength } from '../lib/validation';
+import {
+  validateEmail,
+  validatePassword,
+  calculatePasswordStrength,
+} from '../lib/validation';
 
 export default function SignUpForm() {
   const [email, setEmail] = useState('');
@@ -35,7 +39,7 @@ export default function SignUpForm() {
 
     const { error } = await supabase.auth.signUp({
       email,
-      password
+      password,
     });
 
     if (error) {
@@ -43,7 +47,9 @@ export default function SignUpForm() {
       setLoading(false);
     } else {
       // Check if email verification is required
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (user?.confirmation_sent_at) {
         setVerificationSent(true);
         setEmail('');
@@ -84,8 +90,8 @@ export default function SignUpForm() {
                   ? passwordStrength >= 3
                     ? 'bg-green-500'
                     : passwordStrength >= 2
-                    ? 'bg-yellow-500'
-                    : 'bg-red-500'
+                      ? 'bg-yellow-500'
+                      : 'bg-red-500'
                   : 'bg-gray-200'
               }`}
             />
@@ -124,7 +130,9 @@ export default function SignUpForm() {
       {verificationSent && (
         <div className="mt-4 p-4 bg-blue-50 text-blue-700 rounded">
           <p>A verification email has been sent to your email address.</p>
-          <p className="mt-2">Please check your inbox and click the link to verify your account.</p>
+          <p className="mt-2">
+            Please check your inbox and click the link to verify your account.
+          </p>
         </div>
       )}
     </form>

@@ -10,7 +10,7 @@ export const globals = {
   'ts-jest': {
     tsconfig: 'tsconfig.json',
     stringifyContentPathRegex: '\\.svg$',
-  }
+  },
 };
 export const transformIgnorePatterns = ['<rootDir>/node_modules/'];
 export const moduleFileExtensions = ['ts', 'tsx', 'js', 'jsx', 'json', 'node'];

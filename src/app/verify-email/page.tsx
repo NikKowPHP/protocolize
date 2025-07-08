@@ -44,7 +44,8 @@ export default async function VerifyEmailPage({
       </div>
     );
   } catch (error: unknown) {
-    const message = error instanceof Error ? error.message : 'Verification failed';
+    const message =
+      error instanceof Error ? error.message : 'Verification failed';
     return (
       <div className="max-w-md mx-auto p-4">
         <h1 className="text-2xl font-bold mb-4">Email Verification</h1>

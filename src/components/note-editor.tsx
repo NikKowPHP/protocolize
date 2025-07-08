@@ -1,14 +1,17 @@
 import React from 'react';
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { Button } from '@/components/ui/button';
 
 interface NoteEditorProps {
   initialContent?: string;
   onSave: (content: string) => void;
 }
 
-export const NoteEditor = ({ initialContent = '', onSave }: NoteEditorProps) => {
+export const NoteEditor = ({
+  initialContent = '',
+  onSave,
+}: NoteEditorProps) => {
   const [content, setContent] = React.useState(initialContent);
 
   return (

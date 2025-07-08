@@ -56,12 +56,13 @@ export class GeminiQuestionGenerationService
     context: GenerationContext,
   ): Promise<GeneratedQuestion[]> {
     const { role, difficulty, count, existingQuestionContents } = context;
-    const exclusionPrompt = (existingQuestionContents && existingQuestionContents.length > 0) 
-      ? `
+    const exclusionPrompt =
+      existingQuestionContents && existingQuestionContents.length > 0
+        ? `
     To ensure variety, please DO NOT generate questions that are substantively the same as the following already-existing questions:
     - ${existingQuestionContents.join('\n- ')}
     `
-      : '';
+        : '';
 
     const prompt = `
       You are a pragmatic and expert technical interviewer. Your task is to generate ${count} high-quality, grounded, multi-part interview question(s) suitable for a verbal response.
@@ -126,17 +127,35 @@ export class GeminiQuestionGenerationService
     }
   }
 
-  async generateQuestionsFromPrompt(context: CustomGenerationContext): Promise<GeneratedQuestion[]> {
-    const { prompt, count, role, questionType, temperature, maxTokens, existingQuestionContents } = context;
-    console.log('Generating questions from prompt:', { prompt, count, role, questionType, temperature, maxTokens });
-    
-    const exclusionPrompt = (existingQuestionContents && existingQuestionContents.length > 0)
-      ? `
+  async generateQuestionsFromPrompt(
+    context: CustomGenerationContext,
+  ): Promise<GeneratedQuestion[]> {
+    const {
+      prompt,
+      count,
+      role,
+      questionType,
+      temperature,
+      maxTokens,
+      existingQuestionContents,
+    } = context;
+    console.log('Generating questions from prompt:', {
+      prompt,
+      count,
+      role,
+      questionType,
+      temperature,
+      maxTokens,
+    });
+
+    const exclusionPrompt =
+      existingQuestionContents && existingQuestionContents.length > 0
+        ? `
     To ensure variety, please DO NOT generate questions that are substantively the same as the following already-existing questions:
     - ${existingQuestionContents.join('\n- ')}
     `
-      : '';
-      
+        : '';
+
     const systemPrompt = `
       You are an expert and pragmatic technical interviewer. Your task is to generate ${count} high-quality, open-ended interview question(s) suitable for a verbal response based on the user's prompt. Where possible, try to create multi-part questions that ask for a definition, a rationale, and a practical example.
 
@@ -163,7 +182,7 @@ export class GeminiQuestionGenerationService
       const result = await this.genAI.models.generateContent({
         model: this.model,
         contents: contents,
-        config: config
+        config: config,
       });
       const text = result.text || '';
       if (!text) {
@@ -171,7 +190,9 @@ export class GeminiQuestionGenerationService
       }
       const cleanedText = this.cleanJsonString(text);
       if (!cleanedText) {
-        throw new Error('Gemini response for custom questions was empty after cleaning.');
+        throw new Error(
+          'Gemini response for custom questions was empty after cleaning.',
+        );
       }
 
       let questions = JSON.parse(cleanedText);
@@ -185,7 +206,10 @@ export class GeminiQuestionGenerationService
         topics: q.topics || [],
       }));
     } catch (error) {
-      console.error('Error generating questions from prompt with Gemini:', error);
+      console.error(
+        'Error generating questions from prompt with Gemini:',
+        error,
+      );
       throw error;
     }
   }
@@ -383,7 +407,9 @@ export class GeminiQuestionGenerationService
       }
       const cleanedText = this.cleanJsonString(text);
       if (!cleanedText) {
-        throw new Error('Gemini response for role refinement was empty after cleaning.');
+        throw new Error(
+          'Gemini response for role refinement was empty after cleaning.',
+        );
       }
 
       const suggestions = JSON.parse(cleanedText);

@@ -15,14 +15,14 @@ export async function POST(request: Request) {
       {
         status: 429,
         headers: {
-          'Retry-After': limit.retryAfter!.toString()
-        }
-      }
-  );
+          'Retry-After': limit.retryAfter!.toString(),
+        },
+      },
+    );
   }
 
   try {
-    const supabase =await createClient();
+    const supabase = await createClient();
     const { error } = await supabase.auth.signOut();
 
     if (error) {
@@ -30,25 +30,26 @@ export async function POST(request: Request) {
       return NextResponse.json(
         {
           error: error.message,
-          code: error.code || 'SIGNOUT_ERROR'
+          code: error.code || 'SIGNOUT_ERROR',
         },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
     return NextResponse.json(
       { success: true },
-      { status: 200, headers: { Location: '/login' } }
+      { status: 200, headers: { Location: '/login' } },
     );
   } catch (error: unknown) {
-    const message = error instanceof Error ? error.message : 'Internal server error';
+    const message =
+      error instanceof Error ? error.message : 'Internal server error';
     console.error('Server error during signout:', error);
     return NextResponse.json(
       {
         error: message,
-        code: 'SERVER_ERROR'
+        code: 'SERVER_ERROR',
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

@@ -50,7 +50,8 @@ export default function ResetPasswordPage() {
       setPassword('');
       setConfirmPassword('');
     } catch (error: unknown) {
-      const message = error instanceof Error ? error.message : 'Password reset failed';
+      const message =
+        error instanceof Error ? error.message : 'Password reset failed';
       setError(message);
     } finally {
       setLoading(false);
@@ -62,7 +63,10 @@ export default function ResetPasswordPage() {
       <div className="max-w-md mx-auto p-4">
         <h1 className="text-2xl font-bold mb-4">Password Reset</h1>
         <p className="text-red-500">Invalid reset link</p>
-        <Link href="/forgot-password" className="mt-4 text-blue-500 hover:underline">
+        <Link
+          href="/forgot-password"
+          className="mt-4 text-blue-500 hover:underline"
+        >
           Request new reset link
         </Link>
       </div>
@@ -97,14 +101,19 @@ export default function ResetPasswordPage() {
                   onChange={(e) => {
                     setPassword(e.target.value);
                     const validation = validatePassword(e.target.value);
-                    setPasswordError(validation.valid ? undefined : validation.message);
+                    setPasswordError(
+                      validation.valid ? undefined : validation.message,
+                    );
                   }}
                   className="w-full px-3 py-2 border rounded"
                   required
                 />
               </div>
               <div>
-                <label htmlFor="confirmPassword" className="block text-sm font-medium">
+                <label
+                  htmlFor="confirmPassword"
+                  className="block text-sm font-medium"
+                >
                   Confirm Password
                 </label>
                 <input

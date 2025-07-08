@@ -1,6 +1,6 @@
 'use client';
 
-import Link from "next/link";
+import Link from 'next/link';
 import { useAuth } from '@/lib/auth-context';
 import React from 'react';
 import { useRouter } from 'next/navigation';
@@ -32,7 +32,10 @@ export function AuthLinks() {
   if (user) {
     return (
       <>
-        <button onClick={handleSignOut} className="hover:underline bg-transparent border-none text-white cursor-pointer">
+        <button
+          onClick={handleSignOut}
+          className="hover:underline bg-transparent border-none text-white cursor-pointer"
+        >
           Logout
         </button>
       </>
@@ -41,8 +44,12 @@ export function AuthLinks() {
 
   return (
     <>
-      <Link href="/login" className="hover:underline">Login</Link>
-      <Link href="/signup" className="hover:underline">Sign Up</Link>
+      <Link href="/login" className="hover:underline">
+        Login
+      </Link>
+      <Link href="/signup" className="hover:underline">
+        Sign Up
+      </Link>
     </>
   );
 }

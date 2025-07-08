@@ -10,8 +10,14 @@ interface AuthContextType {
   user: User | null;
   loading: boolean;
   error: string | null;
-  signIn: (email: string, password: string) => Promise<{ error: string | null }>;
-  signUp: (email: string, password: string) => Promise<{ error: string | null }>;
+  signIn: (
+    email: string,
+    password: string,
+  ) => Promise<{ error: string | null }>;
+  signUp: (
+    email: string,
+    password: string,
+  ) => Promise<{ error: string | null }>;
   signOut: () => Promise<void>;
   clearError: () => void;
 }
@@ -26,7 +32,11 @@ const AuthContext = createContext<AuthContextType>({
   clearError: () => {},
 });
 
-export const AuthProvider = ({ children }: { children: React.ReactNode }): React.JSX.Element => {
+export const AuthProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}): React.JSX.Element => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -46,7 +56,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }): React
       async (event, session) => {
         setUser(session?.user ?? null);
         setLoading(false);
-      }
+      },
     );
 
     return () => {
@@ -66,7 +76,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }): React
   }, [user, loading, router]);
 
   const handleAuthOperation = async (
-    operation: () => Promise<{ error: { message: string } | null }>
+    operation: () => Promise<{ error: { message: string } | null }>,
   ): Promise<{ error: string | null }> => {
     setLoading(true);
     setError(null);

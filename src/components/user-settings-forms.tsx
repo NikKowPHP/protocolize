@@ -1,7 +1,13 @@
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from '@/components/ui/card';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 
 export const UserProfileForm = () => {
   return (
@@ -17,7 +23,12 @@ export const UserProfileForm = () => {
         </div>
         <div>
           <Label htmlFor="email">Email</Label>
-          <Input id="email" type="email" defaultValue="jane.doe@example.com" disabled />
+          <Input
+            id="email"
+            type="email"
+            defaultValue="jane.doe@example.com"
+            disabled
+          />
         </div>
         <Button>Update Profile</Button>
       </CardContent>
@@ -30,11 +41,18 @@ export const SubscriptionManagement = () => {
     <Card>
       <CardHeader>
         <CardTitle>Subscription</CardTitle>
-        <CardDescription>Manage your billing and subscription details.</CardDescription>
+        <CardDescription>
+          Manage your billing and subscription details.
+        </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
-        <p>You are currently on the <span className="font-semibold text-primary">Premium Plan</span>.</p>
-        <p className="text-sm text-muted-foreground">Your subscription will renew on July 31, 2024.</p>
+        <p>
+          You are currently on the{' '}
+          <span className="font-semibold text-primary">Premium Plan</span>.
+        </p>
+        <p className="text-sm text-muted-foreground">
+          Your subscription will renew on July 31, 2024.
+        </p>
         <Button>Manage Billing</Button>
       </CardContent>
     </Card>

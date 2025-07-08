@@ -1,6 +1,12 @@
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { CheckCircle } from "lucide-react";
+import { Button } from '@/components/ui/button';
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from '@/components/ui/card';
+import { CheckCircle } from 'lucide-react';
 
 const Feature = ({ children }: { children: React.ReactNode }) => (
   <div className="flex items-center gap-2">
@@ -19,7 +25,9 @@ export const PricingTable = () => {
           <CardDescription>Basic features to get started</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="text-3xl font-bold">$0<span className="text-sm text-muted-foreground">/month</span></div>
+          <div className="text-3xl font-bold">
+            $0<span className="text-sm text-muted-foreground">/month</span>
+          </div>
           <Button className="w-full">Get Started</Button>
           <div className="space-y-2">
             <Feature>Basic Protocol Tracking</Feature>
@@ -36,7 +44,9 @@ export const PricingTable = () => {
           <CardDescription>For serious practitioners</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="text-3xl font-bold">$15<span className="text-sm text-muted-foreground">/month</span></div>
+          <div className="text-3xl font-bold">
+            $15<span className="text-sm text-muted-foreground">/month</span>
+          </div>
           <Button className="w-full">Upgrade Now</Button>
           <div className="space-y-2">
             <Feature>Unlimited Protocols</Feature>
@@ -54,7 +64,9 @@ export const PricingTable = () => {
           <CardDescription>For groups and organizations</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="text-3xl font-bold">$30<span className="text-sm text-muted-foreground">/month</span></div>
+          <div className="text-3xl font-bold">
+            $30<span className="text-sm text-muted-foreground">/month</span>
+          </div>
           <Button className="w-full">Contact Sales</Button>
           <div className="space-y-2">
             <Feature>All Pro Features</Feature>

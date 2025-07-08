@@ -8,16 +8,18 @@ import { GeminiQuestionGenerationService } from './gemini-service';
  */
 export function getQuestionGenerationService(): QuestionGenerationService {
   const provider = process.env.AI_PROVIDER;
-  
-  switch(provider) {
+
+  switch (provider) {
     case 'gemini':
       if (!process.env.GEMINI_API_KEY) {
-        throw new Error('GEMINI_API_KEY is required when using Gemini provider');
+        throw new Error(
+          'GEMINI_API_KEY is required when using Gemini provider',
+        );
       }
       return new GeminiQuestionGenerationService(process.env.GEMINI_API_KEY);
-    
+
     // Add cases for other providers here
-    
+
     default:
       throw new Error(`Unsupported AI provider: ${provider}`);
   }

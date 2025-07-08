@@ -1,8 +1,14 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Label } from '@/components/ui/label';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 
 export const ReminderForm = () => {
   return (
@@ -29,7 +35,7 @@ export const ReminderForm = () => {
           <Input id="time" type="time" defaultValue="08:00" />
         </div>
         <div>
-            <Button className="w-full">Save Reminder</Button>
+          <Button className="w-full">Save Reminder</Button>
         </div>
       </CardContent>
     </Card>

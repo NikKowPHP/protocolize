@@ -15,9 +15,9 @@ export async function POST(request: Request) {
       {
         status: 429,
         headers: {
-          'Retry-After': limit.retryAfter!.toString()
-        }
-      }
+          'Retry-After': limit.retryAfter!.toString(),
+        },
+      },
     );
   }
 
@@ -30,17 +30,17 @@ export async function POST(request: Request) {
       console.error('Invalid JSON format in request body:', error);
       return NextResponse.json(
         { error: 'Invalid JSON format in request body' },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     const { email, password } = body;
-    
+
     // Validate required fields
     if (!email || !password) {
       return NextResponse.json(
         { error: 'Email and password are required' },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -51,22 +51,23 @@ export async function POST(request: Request) {
       return NextResponse.json(
         {
           error: error.message,
-          code: error.code || 'AUTH_ERROR'
+          code: error.code || 'AUTH_ERROR',
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     return NextResponse.json(data);
   } catch (error: unknown) {
-    const message = error instanceof Error ? error.message : 'Internal server error';
+    const message =
+      error instanceof Error ? error.message : 'Internal server error';
     console.error('Server error during login:', error);
     return NextResponse.json(
       {
         error: message,
-        code: 'SERVER_ERROR'
+        code: 'SERVER_ERROR',
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

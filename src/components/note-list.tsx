@@ -1,8 +1,24 @@
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from '@/components/ui/card';
 
 const MOCK_NOTES = [
-  { id: "n1", content: "Key takeaway: the timing of light exposure is critical for anchoring the circadian rhythm.", createdAt: "2 days ago" },
-  { id: "n2", content: "Need to remember that the cold stimulus should be enough to be uncomfortable but not so much that it causes shivering.", createdAt: "1 day ago" },
+  {
+    id: 'n1',
+    content:
+      'Key takeaway: the timing of light exposure is critical for anchoring the circadian rhythm.',
+    createdAt: '2 days ago',
+  },
+  {
+    id: 'n2',
+    content:
+      'Need to remember that the cold stimulus should be enough to be uncomfortable but not so much that it causes shivering.',
+    createdAt: '1 day ago',
+  },
 ];
 
 export const NoteList = () => {
@@ -10,7 +26,9 @@ export const NoteList = () => {
     <Card>
       <CardHeader>
         <CardTitle>Your Notes</CardTitle>
-        <CardDescription>Review your previous notes and insights</CardDescription>
+        <CardDescription>
+          Review your previous notes and insights
+        </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         {MOCK_NOTES.map((note) => (
