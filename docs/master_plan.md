@@ -28,7 +28,7 @@ This document outlines the high-level, phased plan for building the Protocolize 
 
 ---
 
-### `[ ]` Phase D: Database Schema and Seeding
+### `[x]` Phase D: Database Schema and Seeding
 
 **Goal:** Establish the application's data layer by implementing the final Prisma schema, running the initial database migration, and creating seed scripts to populate the database with necessary initial data (e.g., subscription plans, foundational protocols).
 
