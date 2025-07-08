@@ -1,5 +1,8 @@
-import { UserProfileForm } from '@/components/user-settings-forms';
-import { SubscriptionManagement } from '@/components/user-settings-forms';
+import {
+  UserProfileForm,
+  SubscriptionManagement,
+  NotificationSettings,
+} from '@/components/user-settings-forms';
 import React from 'react';
 
 export default function SettingsPage() {
@@ -15,6 +18,7 @@ export default function SettingsPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <UserProfileForm />
         <SubscriptionManagement />
+        <NotificationSettings />
       </div>
     </div>
   );

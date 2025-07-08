@@ -206,7 +206,7 @@ This is a comprehensive phase focused on the frontend. It involves removing all 
 
 ### 3. Note Management Integration
 
-- [ ] **Task 3.1: Define Note Type and API Client:**
+- [x] **Task 3.1: Define Note Type and API Client:**
 
   - **File:** `src/lib/types/protocolize.ts`
   - **Action:** Add the `Note` interface.
@@ -490,7 +490,7 @@ This is a comprehensive phase focused on the frontend. It involves removing all 
 
 ### 4. Push Notification Subscription
 
-- [ ] **Task 4.1: Create a Service Worker:** Create the service worker file that will listen for push events in the background.
+- [x] **Task 4.1: Create a Service Worker:** Create the service worker file that will listen for push events in the background.
 
   - **File:** `public/sw.js`
   - **Action:** Create the file with the following content.
@@ -560,7 +560,7 @@ This is a comprehensive phase focused on the frontend. It involves removing all 
   }
   ```
 
-- [ ] **Task 4.3: Add a "Enable Notifications" Button:** Add a button to the settings page to trigger the subscription flow.
+- [x] **Task 4.3: Add a "Enable Notifications" Button:** Add a button to the settings page to trigger the subscription flow.
 
   - **File:** `src/components/user-settings-forms.tsx`
   - **Action:** Add a new `NotificationSettings` card component to the file.
@@ -600,7 +600,7 @@ This is a comprehensive phase focused on the frontend. It involves removing all 
   };
   ```
 
-- [ ] **Task 4.4: Integrate Notification Settings into Settings Page:**
+- [x] **Task 4.4: Integrate Notification Settings into Settings Page:**
 
   - **File:** `src/app/settings/page.tsx`
   - **Action:** Add the `NotificationSettings` component to the settings page.

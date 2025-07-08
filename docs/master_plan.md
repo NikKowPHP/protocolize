@@ -52,7 +52,7 @@ This document outlines the high-level, phased plan for building the Protocolize 
 
 ---
 
-### `[ ]` Phase G: Subscription and Billing Integration
+### `[x]` Phase G: Subscription and Billing Integration
 
 **Goal:** Implement the complete monetization lifecycle by integrating with the Stripe API. This includes creating checkout sessions, handling the customer portal, and building a secure webhook endpoint to synchronize subscription status with the database.
 
@@ -60,7 +60,7 @@ This document outlines the high-level, phased plan for building the Protocolize 
 
 ---
 
-### `[ ]` Phase H: Backend Automation & Service Integration
+### `[x]` Phase H: Backend Automation & Service Integration
 
 **Goal:** Build the automated engines that power the app's dynamic nature. This includes implementing the **Content Ingestion Pipeline** (YouTube API -> Gemini API -> DB) and the **Reminder Scheduling Engine** (Vercel Cron -> FCM Push Notifications).
 

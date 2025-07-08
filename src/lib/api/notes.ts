@@ -13,7 +13,6 @@ type CreateNotePayload = {
   content: string;
   isPublic?: boolean;
 };
-
 export const createNote = async (
   payload: CreateNotePayload,
 ): Promise<Note> => {

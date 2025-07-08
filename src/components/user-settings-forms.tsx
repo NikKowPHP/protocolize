@@ -1,3 +1,5 @@
+import { subscribeToPushNotifications } from '@/lib/push-notifications';
+import { useState } from 'react';
 import {
   Card,
   CardContent,
@@ -36,7 +38,62 @@ export const UserProfileForm = () => {
   );
 };
 
+export const NotificationSettings = () => {
+  const handleEnableNotifications = async () => {
+    try {
+      await subscribeToPushNotifications();
+      alert('Notifications enabled successfully!');
+    } catch (error) {
+      alert(
+        `Error enabling notifications: ${error instanceof Error ? error.message : 'Unknown error'}`,
+      );
+    }
+  };
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Notifications</CardTitle>
+        <CardDescription>
+          Enable push notifications for your reminders.
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <Button onClick={handleEnableNotifications}>
+          Enable Notifications
+        </Button>
+      </CardContent>
+    </Card>
+  );
+};
+
 export const SubscriptionManagement = () => {
+  const [loading, setLoading] = useState(false);
+  // In a real app, this data would come from a useQuery hook fetching user data
+  const currentPlan = 'Premium Plan';
+  const renewalDate = 'July 31, 2024';
+
+  const handleManageBilling = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch('/api/stripe/customer-portal', {
+        method: 'POST',
+      });
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.error || 'Failed to create portal session');
+      }
+      const { url } = await res.json();
+      window.location.href = url;
+    } catch (error) {
+      alert(
+        `Error: ${error instanceof Error ? error.message : 'Could not open billing portal.'}`,
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <Card>
       <CardHeader>
@@ -48,12 +105,14 @@ export const SubscriptionManagement = () => {
       <CardContent className="space-y-4">
         <p>
           You are currently on the{' '}
-          <span className="font-semibold text-primary">Premium Plan</span>.
+          <span className="font-semibold text-primary">{currentPlan}</span>.
         </p>
         <p className="text-sm text-muted-foreground">
-          Your subscription will renew on July 31, 2024.
+          Your subscription will renew on {renewalDate}.
         </p>
-        <Button>Manage Billing</Button>
+        <Button onClick={handleManageBilling} disabled={loading}>
+          {loading ? 'Redirecting...' : 'Manage Billing'}
+        </Button>
       </CardContent>
     </Card>
   );

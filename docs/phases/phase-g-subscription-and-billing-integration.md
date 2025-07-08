@@ -33,7 +33,7 @@ Let's generate the complete, correct, and fully explicit plan for **Phase G**. T
   STRIPE_PREMIUM_PRICE_ID=
   ```
 
-- [ ] **Task 1.3: Create Stripe Service Library:** Create a centralized library for interacting with the Stripe SDK.
+- [x] **Task 1.3: Create Stripe Service Library:** Create a centralized library for interacting with the Stripe SDK.
 
   - **File:** `src/lib/stripe/client.ts`
   - **Action:** Create the file with the following complete content.
@@ -53,7 +53,7 @@ Let's generate the complete, correct, and fully explicit plan for **Phase G**. T
 
 ### 2. Stripe Checkout Session API
 
-- [ ] **Task 2.1: Create Checkout Session API Route:** Create the API endpoint that generates a Stripe Checkout session for a user to upgrade their plan.
+- [x] **Task 2.1: Create Checkout Session API Route:** Create the API endpoint that generates a Stripe Checkout session for a user to upgrade their plan.
 
   - **Command:** `mkdir -p src/app/api/stripe/checkout-session`
   - **File:** `src/app/api/stripe/checkout-session/route.ts`
@@ -135,7 +135,7 @@ Let's generate the complete, correct, and fully explicit plan for **Phase G**. T
   }
   ```
 
-- [ ] **Task 2.2: Connect `PricingTable` to Checkout:** Update the `PricingTable` component to call the new checkout API endpoint and redirect the user to Stripe.
+- [x] **Task 2.2: Connect `PricingTable` to Checkout:** Update the `PricingTable` component to call the new checkout API endpoint and redirect the user to Stripe.
 
   - **File:** `src/components/pricing-table.tsx`
   - **Action:** Replace the entire file content with the following dynamic version.
@@ -244,7 +244,7 @@ Let's generate the complete, correct, and fully explicit plan for **Phase G**. T
 
 ### 3. Stripe Customer Portal API
 
-- [ ] **Task 3.1: Create Customer Portal API Route:** Create an endpoint that generates a Stripe Customer Portal session.
+- [x] **Task 3.1: Create Customer Portal API Route:** Create an endpoint that generates a Stripe Customer Portal session.
 
   - **Command:** `mkdir -p src/app/api/stripe/customer-portal`
   - **File:** `src/app/api/stripe/customer-portal/route.ts`
@@ -294,7 +294,7 @@ Let's generate the complete, correct, and fully explicit plan for **Phase G**. T
   }
   ```
 
-- [ ] **Task 3.2: Connect `SubscriptionManagement` to Portal:** Update the component to call the portal API.
+- [x] **Task 3.2: Connect `SubscriptionManagement` to Portal:** Update the component to call the portal API.
 
   - **File:** `src/components/user-settings-forms.tsx`
   - **Action:** Replace the entire `SubscriptionManagement` component with the following dynamic version.
@@ -367,7 +367,7 @@ Let's generate the complete, correct, and fully explicit plan for **Phase G**. T
 
 ### 4. Stripe Webhook Handler
 
-- [ ] **Task 4.1: Create Webhook API Route:** Create the endpoint that will receive and process webhook events from Stripe.
+- [x] **Task 4.1: Create Webhook API Route:** Create the endpoint that will receive and process webhook events from Stripe.
 
   - **Command:** `mkdir -p src/app/api/stripe/webhook`
   - **File:** `src/app/api/stripe/webhook/route.ts`

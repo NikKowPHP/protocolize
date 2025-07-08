@@ -1,3 +1,5 @@
+'use client';
+
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -7,73 +9,87 @@ import {
   CardDescription,
 } from '@/components/ui/card';
 import { CheckCircle } from 'lucide-react';
+import { useState } from 'react';
 
 const Feature = ({ children }: { children: React.ReactNode }) => (
-  <div className="flex items-center gap-2">
-    <CheckCircle className="w-4 h-4 text-green-500" />
-    <span>{children}</span>
-  </div>
+  <li className="flex items-center space-x-2">
+    <CheckCircle className="h-5 w-5 text-green-500" />
+    <span className="text-muted-foreground">{children}</span>
+  </li>
 );
 
 export const PricingTable = () => {
+  const [loading, setLoading] = useState(false);
+
+  const handleUpgradeClick = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch('/api/stripe/checkout-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.error || 'Failed to create session');
+      }
+
+      const { url } = await res.json();
+      window.location.href = url;
+    } catch (error) {
+      alert(
+        `Error: ${error instanceof Error ? error.message : 'Could not redirect to payment.'}`,
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-      {/* Free Plan */}
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
       <Card>
-        <CardHeader>
-          <CardTitle>Free</CardTitle>
-          <CardDescription>Basic features to get started</CardDescription>
+        <CardHeader className="text-center">
+          <CardTitle className="text-2xl">Free</CardTitle>
+          <CardDescription>Get started with the basics</CardDescription>
+          <p className="text-4xl font-bold mt-2">$0</p>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="text-3xl font-bold">
-            $0<span className="text-sm text-muted-foreground">/month</span>
-          </div>
-          <Button className="w-full">Get Started</Button>
-          <div className="space-y-2">
-            <Feature>Basic Protocol Tracking</Feature>
-            <Feature>3 Reminders</Feature>
-            <Feature>Community Notes</Feature>
-          </div>
+          <ul className="space-y-2">
+            <Feature>Limited protocol summaries</Feature>
+            <Feature>Pre-set foundational reminders</Feature>
+            <Feature>Basic personal notes</Feature>
+          </ul>
+          <Button variant="outline" className="w-full" disabled>
+            Your Current Plan
+          </Button>
         </CardContent>
       </Card>
-
-      {/* Pro Plan */}
-      <Card className="border-2 border-primary">
-        <CardHeader>
-          <CardTitle>Pro</CardTitle>
-          <CardDescription>For serious practitioners</CardDescription>
+      <Card className="border-primary">
+        <CardHeader className="text-center">
+          <CardTitle className="text-2xl">Premium</CardTitle>
+          <CardDescription>Unlock your full potential</CardDescription>
+          <p className="text-4xl font-bold mt-2">
+            $7
+            <span className="text-lg font-normal text-muted-foreground">
+              /mo
+            </span>
+          </p>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="text-3xl font-bold">
-            $15<span className="text-sm text-muted-foreground">/month</span>
-          </div>
-          <Button className="w-full">Upgrade Now</Button>
-          <div className="space-y-2">
-            <Feature>Unlimited Protocols</Feature>
-            <Feature>Unlimited Reminders</Feature>
-            <Feature>Advanced Analytics</Feature>
-            <Feature>Priority Support</Feature>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Team Plan */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Team</CardTitle>
-          <CardDescription>For groups and organizations</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="text-3xl font-bold">
-            $30<span className="text-sm text-muted-foreground">/month</span>
-          </div>
-          <Button className="w-full">Contact Sales</Button>
-          <div className="space-y-2">
-            <Feature>All Pro Features</Feature>
-            <Feature>Team Management</Feature>
-            <Feature>Shared Protocols</Feature>
-            <Feature>Custom Reports</Feature>
-          </div>
+          <ul className="space-y-2">
+            <Feature>Full content library & guides</Feature>
+            <Feature>Unlimited & Customizable reminders</Feature>
+            <Feature>Advanced note-taking</Feature>
+            <Feature>Protocol adherence tracking</Feature>
+            <Feature>Community notes access</Feature>
+          </ul>
+          <Button
+            onClick={handleUpgradeClick}
+            disabled={loading}
+            className="w-full"
+          >
+            {loading ? 'Redirecting...' : 'Upgrade to Premium'}
+          </Button>
         </CardContent>
       </Card>
     </div>
