@@ -67,7 +67,7 @@ This plan is meticulously crafted to eliminate all ambiguities and "lazy comment
   }
   ```
 
-- [ ] **Task 1.2: Implement `POST /api/notes`:** Implement the logic to create a new note for the authenticated user, including validation and feature gating for public notes.
+- [x] **Task 1.2: Implement `POST /api/notes`:** Implement the logic to create a new note for the authenticated user, including validation and feature gating for public notes.
 
   - **File:** `src/app/api/notes/route.ts`
   - **Action:** Add the `POST` handler and its `zod` schema to the _same file_.
