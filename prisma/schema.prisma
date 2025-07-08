@@ -1,99 +1,156 @@
 generator client {
-  provider = "prisma-client-js"
-}
+      provider = "prisma-client-js"
+    }
 
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
+    datasource db {
+      provider = "postgresql"
+      url      = env("DATABASE_URL")
+    }
 
-model User {
-  id              String            @id @default(cuid())
-  email           String            @unique
-  name            String?
-  createdAt       DateTime          @default(now())
-  updatedAt       DateTime          @updatedAt
-  questions       Question[]
-  reviews         Review[]
-  progressMetrics ProgressMetrics[]
-  objectives      Objective[]
-  userTopics      UserTopic[]
-}
+    model User {
+      id                String    @id @default(uuid())
+      email             String    @unique
+      name              String?
+      supabaseAuthId    String    @unique @map("supabase_auth_id")
 
-model Question {
-  id                String              @id @default(cuid())
-  userId            String
-  content           String
-  answer            String? // Added answer field
-  category          String?
-  difficulty        String?
-  createdAt         DateTime            @default(now())
-  updatedAt         DateTime          @updatedAt
-  lastReviewed      DateTime?
-  reviewInterval    Int                 @default(1)
-  reviewEase        Float               @default(2.5)
-  struggleCount     Int                 @default(0)
-  lastStruggledAt   DateTime?
-  totalStruggleTime Int                 @default(0)
-  reviewCount       Int                 @default(0)
-  overdue           Boolean             @default(false)
-  weight            Float               @default(1.0)
-  topics            String[]            @default([])
-  user              User                @relation(fields: [userId], references: [id])
-  reviews           Review[]
-  objectives        Objective[]         @relation("ObjectiveQuestions")
-  ObjectiveQuestion ObjectiveQuestion[]
-}
+      stripeCustomerId   String?   @unique @map("stripe_customer_id")
+      subscriptionTier   String    @default("FREE")
+      subscriptionStatus String?   @map("subscription_status")
 
-model Review {
-  id         String   @id @default(cuid())
-  questionId String
-  userId     String
-  remembered Boolean
-  reviewedAt DateTime @default(now())
-  question   Question @relation(fields: [questionId], references: [id])
-  user       User     @relation(fields: [userId], references: [id])
-}
+      createdAt      DateTime       @default(now()) @map("created_at")
+      updatedAt      DateTime       @updatedAt @map("updated_at")
+      
+      subscriptions      Subscription[]
+      notes              Note[]
+      reminders          UserReminder[]
+      trackingLogs       UserProtocolTracking[]
+      pushSubscriptions  PushSubscription[]
+    }
 
-model Objective {
-  id                String              @id @default(cuid())
-  name              String
-  description       String?
-  userId            String
-  createdAt         DateTime            @default(now())
-  updatedAt         DateTime          @updatedAt
-  user              User                @relation(fields: [userId], references: [id])
-  questions         Question[]          @relation("ObjectiveQuestions")
-  ObjectiveQuestion ObjectiveQuestion[]
-}
+    model Plan {
+      id              String   @id @default(cuid())
+      name            String   @unique
+      description     String?
+      stripeProductId String?  @unique @map("stripe_product_id")
+      isActive        Boolean  @default(true) @map("is_active")
+      createdAt       DateTime @default(now()) @map("created_at")
+      updatedAt       DateTime @updatedAt @map("updated_at")
+      
+      subscriptions Subscription[]
+    }
 
-model ObjectiveQuestion {
-  id          String    @id @default(cuid())
-  objective   Objective @relation(fields: [objectiveId], references: [id])
-  objectiveId String
-  question    Question  @relation(fields: [questionId], references: [id])
-  questionId  String
-  createdAt   DateTime  @default(now())
+    model Subscription {
+      id             String    @id @default(cuid())
+      userId         String
+      user           User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+      planId         String
+      plan           Plan      @relation(fields: [planId], references: [id], onDelete: Restrict)
+      status         String
+      provider       String    @default("stripe")
+      providerId     String    @unique @map("provider_id")
+      endsAt         DateTime? @map("ends_at")
+      createdAt      DateTime  @default(now()) @map("created_at")
+      updatedAt      DateTime  @updatedAt @map("updated_at")
+    }
 
-  @@unique([objectiveId, questionId])
-}
+    model Episode {
+      id            String   @id @default(cuid())
+      title         String
+      episodeNumber Int?     @map("episode_number")
+      publishedAt   DateTime?@map("published_at")
+      description   String?  @db.Text
+      sourceUrl     String?  @map("source_url")
+      status        String   @default("DRAFT") // DRAFT, PUBLISHED, ARCHIVED
+      createdAt     DateTime @default(now()) @map("created_at")
+      updatedAt     DateTime @updatedAt @map("updated_at")
+      
+      protocols Protocol[] @relation("EpisodeProtocol")
+      summaries Summary[]
+      notes     Note[]
+    }
 
-model ProgressMetrics {
-  id               String   @id @default(cuid())
-  userId           String
-  totalQuestions   Int      @default(0)
-  correctAnswers   Int      @default(0)
-  incorrectAnswers Int      @default(0)
-  lastReviewedAt   DateTime @default(now())
-  user             User     @relation(fields: [userId], references: [id])
-}
+    model Protocol {
+      id                   String   @id @default(cuid())
+      name                 String
+      description          String   @db.Text
+      category             String?
+      implementationGuide  String?  @db.Text @map("implementation_guide")
+      researchLinks        Json?    @map("research_links")
+      isFree               Boolean  @default(false) @map("is_free")
+      status               String   @default("DRAFT") // DRAFT, PUBLISHED
+      createdAt            DateTime @default(now()) @map("created_at")
+      updatedAt            DateTime @updatedAt @map("updated_at")
+      
+      @@index([name, status])
 
-model UserTopic {
-  id           String  @id @default(cuid())
-  userId       String
-  topicId      String
-  masteryLevel Int     @default(0)
-  user         User    @relation(fields: [userId], references: [id])
+      episodes     Episode[]              @relation("EpisodeProtocol")
+      reminders    UserReminder[]
+      trackingLogs UserProtocolTracking[]
+    }
 
-  @@unique([userId, topicId])
-}
+    model Summary {
+      id        String   @id @default(cuid())
+      episodeId String
+      episode   Episode  @relation(fields: [episodeId], references: [id], onDelete: Cascade)
+      content   String   @db.Text
+      type      String   @default("summary") // e.g., 'summary', 'key_takeaway'
+      createdAt DateTime @default(now()) @map("created_at")
+      updatedAt DateTime @updatedAt @map("updated_at")
+    }
+
+    model Note {
+      id        String   @id @default(cuid())
+      userId    String
+      user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+      episodeId String
+      episode   Episode  @relation(fields: [episodeId], references: [id], onDelete: Cascade)
+      content   String   @db.Text
+      isPublic  Boolean  @default(false) @map("is_public")
+      createdAt DateTime @default(now()) @map("created_at")
+      updatedAt DateTime @updatedAt @map("updated_at")
+    }
+
+    model UserReminder {
+      id          String   @id @default(cuid())
+      userId      String
+      user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+      protocolId  String
+      protocol    Protocol @relation(fields: [protocolId], references: [id], onDelete: Cascade)
+      reminderTime String  @map("reminder_time")
+      timezone    String
+      isActive    Boolean  @default(true) @map("is_active")
+      createdAt   DateTime @default(now()) @map("created_at")
+      updatedAt   DateTime @updatedAt @map("updated_at")
+    }
+
+    model UserProtocolTracking {
+      id         String   @id @default(cuid())
+      userId     String
+      user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+      protocolId String
+      protocol   Protocol @relation(fields: [protocolId], references: [id], onDelete: Cascade)
+      trackedAt  DateTime @map("tracked_at") @db.Date
+      notes      String?  @db.Text
+      createdAt  DateTime @default(now()) @map("created_at")
+
+      @@unique([userId, protocolId, trackedAt])
+    }
+
+    model PushSubscription {
+      id        String   @id @default(cuid())
+      userId    String
+      user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+      endpoint  String   @unique
+      keys      Json
+      createdAt DateTime @default(now()) @map("created_at")
+    }
+
+    // Many-to-many relation table for Episode and Protocol
+    model EpisodeProtocol {
+      episodeId  String
+      protocolId String
+      episode    Episode  @relation(fields: [episodeId], references: [id])
+      protocol   Protocol @relation(fields: [protocolId], references: [id])
+    
+      @@id([episodeId, protocolId])
+    }
