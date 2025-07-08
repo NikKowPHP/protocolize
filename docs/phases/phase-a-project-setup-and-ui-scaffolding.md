@@ -196,7 +196,7 @@ Here is the complete and refined `phase-a-project-setup-and-ui-scaffolding.md` f
 ---
 ### 3. Core Layout & Branding Adaptation
 
--   [ ] **Task 3.1: Update Root Layout and Metadata:** Modify `src/app/layout.tsx` to change the application title and description, and to prepare it for the `ThemeProvider`.
+-   [x] **Task 3.1: Update Root Layout and Metadata:** Modify `src/app/layout.tsx` to change the application title and description, and to prepare it for the `ThemeProvider`.
     *   **File:** `src/app/layout.tsx`
     *   **Action:** Replace the entire file content with the following code.
     ```tsx

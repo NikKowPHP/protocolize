@@ -1,23 +1,12 @@
 import React from 'react';
 import type { Metadata } from "next";
-// import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { Providers } from '@/providers';
+import { AuthProvider } from '@/lib/auth-context';
 import Navbar from '@/components/Navbar';
 
-// const geistSans = Geist({
-//   variable: "--font-geist-sans",
-//   subsets: ["latin"],
-// });
-
-// const geistMono = Geist_Mono({
-//   variable: "--font-geist-mono",
-//   subsets: ["latin"],
-// });
-
 export const metadata: Metadata = {
-  title: "PrepAI - Interview Preparation",
-  description: "AI-driven interview preparation platform",
+  title: "Protocolize - Turn Theory into Practice",
+  description: "Implement science-backed health protocols from your favorite experts into a consistent, actionable lifestyle.",
 };
 
 export default function RootLayout({
@@ -27,14 +16,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        // className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        className="antialiased"
-      >
-        <Providers>
+      <body className="antialiased">
+        <AuthProvider>
           <Navbar />
-          {children}
-        </Providers>
+          <main>{children}</main>
+        </AuthProvider>
       </body>
     </html>
   );
