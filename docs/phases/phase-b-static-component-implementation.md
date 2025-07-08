@@ -532,7 +532,7 @@ This plan systematically builds all the necessary UI components for the "Protoco
       );
     };
     ```
--   [ ] **Task 6.4: Integrate User Components into Settings Page:** Update the Settings page.
+-   [x] **Task 6.4: Integrate User Components into Settings Page:** Update the Settings page.
     *   **File:** `src/app/settings/page.tsx`
     *   **Action:** Replace the entire file content with the following code.
     ```tsx
