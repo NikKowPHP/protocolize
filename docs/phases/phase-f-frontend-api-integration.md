@@ -325,7 +325,7 @@ This is a comprehensive phase focused on the frontend. It involves removing all 
   };
   ```
 
-- [ ] **Task 3.3: Refactor `NoteEditor` to be Dynamic:** Connect the editor to the `createNote` mutation.
+- [x] **Task 3.3: Refactor `NoteEditor` to be Dynamic:** Connect the editor to the `createNote` mutation.
 
   - **File:** `src/components/note-editor.tsx`
   - **Action:** Replace the entire file with the following dynamic version.
