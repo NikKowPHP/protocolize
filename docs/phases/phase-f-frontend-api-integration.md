@@ -154,7 +154,7 @@ This is a comprehensive phase focused on the frontend. It involves removing all 
   };
   ```
 
-- [ ] **Task 2.3: Refactor `ProtocolList` to Use React Query:** Modify the `ProtocolList` component to fetch live data from the `/api/protocols` endpoint.
+- [x] **Task 2.3: Refactor `ProtocolList` to Use React Query:** Modify the `ProtocolList` component to fetch live data from the `/api/protocols` endpoint.
 
   - **File:** `src/components/protocol-list.tsx`
   - **Action:** Replace the entire file content with the following dynamic version.

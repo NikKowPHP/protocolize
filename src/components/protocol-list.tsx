@@ -1,33 +1,38 @@
-import { ProtocolCard } from './protocol-card';
+'use client';
 
-const MOCK_PROTOCOLS = [
-  {
-    id: '1',
-    name: 'Morning Sunlight Exposure',
-    category: 'Circadian Rhythm',
-    description:
-      'View sunlight by going outside within 30-60 minutes of waking. Do that again in the late afternoon.',
-  },
-  {
-    id: '2',
-    name: 'Cold Exposure',
-    category: 'Metabolism & Resilience',
-    description:
-      'Use cold exposure (ice bath, cold shower) to enhance metabolism and mental resilience.',
-  },
-  {
-    id: '3',
-    name: 'Non-Sleep Deep Rest (NSDR)',
-    category: 'Focus & Recovery',
-    description:
-      'A 10-30 minute protocol to deliberately disengage and enhance neuroplasticity and learning.',
-  },
-];
+import { useQuery } from '@tanstack/react-query';
+import { ProtocolCard } from './protocol-card';
+import { getProtocols } from '@/lib/api/content';
 
 export const ProtocolList = () => {
+  const {
+    data: protocols,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ['protocols'],
+    queryFn: getProtocols,
+  });
+
+  if (isLoading) {
+    return <div className="text-center p-4">Loading protocols...</div>;
+  }
+
+  if (isError) {
+    return (
+      <div className="text-red-500 text-center p-4">
+        Error loading protocols. Please try again later.
+      </div>
+    );
+  }
+
+  if (!protocols || protocols.length === 0) {
+    return <div className="text-center p-4">No protocols found.</div>;
+  }
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {MOCK_PROTOCOLS.map((protocol) => (
+      {protocols.map((protocol) => (
         <ProtocolCard key={protocol.id} {...protocol} />
       ))}
     </div>
