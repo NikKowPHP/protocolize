@@ -251,7 +251,7 @@ This phase marks the transition from static UI to a dynamic backend. Its sole fo
   }
   ```
 
-- [ ] **Task 2.6: Run the Seed Command:** Execute the seed script to populate the local database with the initial data.
+- [x] **Task 2.6: Run the Seed Command:** Execute the seed script to populate the local database with the initial data.
   ```bash
   npx prisma db seed
   ```
