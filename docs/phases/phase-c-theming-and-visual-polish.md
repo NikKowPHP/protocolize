@@ -200,7 +200,7 @@ This plan is now fully explicit, removing any ambiguity. It contains the complet
     }
     ```
 
--   [ ] **Task 1.5: Add `ThemeToggle` to Navbar:** Integrate the new theme toggle button into the main navigation bar for easy access.
+-   [x] **Task 1.5: Add `ThemeToggle` to Navbar:** Integrate the new theme toggle button into the main navigation bar for easy access.
     *   **File:** `src/components/Navbar.tsx`
     *   **Action:** Replace the entire file content with the following code, which adds the `ThemeToggle`.
     ```tsx
