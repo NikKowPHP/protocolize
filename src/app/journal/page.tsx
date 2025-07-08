@@ -1,28 +1,72 @@
+'use client';
+
 import { NoteEditor } from '@/components/note-editor';
 import { NoteList } from '@/components/note-list';
-import React from 'react';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import React, { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { getEpisodes } from '@/lib/api/content';
 
 export default function JournalPage() {
-  const episodeTitle = 'Morning Sunlight Protocol';
+  const [selectedEpisodeId, setSelectedEpisodeId] = useState<string>('');
+
+  const { data: episodes, isLoading: isLoadingEpisodes } = useQuery({
+    queryKey: ['episodes'],
+    queryFn: getEpisodes,
+  });
+
+  const selectedEpisodeTitle =
+    episodes?.find((e) => e.id === selectedEpisodeId)?.title ||
+    'selected episode';
 
   return (
-    <div className="container mx-auto p-4 md:p-8 space-y-8">
-      <h1 className="text-3xl font-bold">Journal</h1>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div className="space-y-4">
-          <h2 className="text-2xl font-semibold">New Entry</h2>
-          <NoteEditor
-            initialContent=""
-            onSave={(content) => console.log('Saving:', content)}
-          />
-        </div>
-
-        <div className="space-y-4">
-          <h2 className="text-2xl font-semibold">Previous Entries</h2>
-          <NoteList />
+    <div className="container mx-auto p-4 md:p-8">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+        <h1 className="text-3xl font-bold">My Journal</h1>
+        <div className="w-full md:w-72">
+          <Select
+            onValueChange={setSelectedEpisodeId}
+            value={selectedEpisodeId}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Select an episode..." />
+            </SelectTrigger>
+            <SelectContent>
+              {isLoadingEpisodes ? (
+                <SelectItem value="loading" disabled>
+                  Loading...
+                </SelectItem>
+              ) : (
+                episodes?.map((ep) => (
+                  <SelectItem key={ep.id} value={ep.id}>
+                    {ep.title}
+                  </SelectItem>
+                ))
+              )}
+            </SelectContent>
+          </Select>
         </div>
       </div>
+
+      {selectedEpisodeId ? (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <NoteEditor
+            episodeId={selectedEpisodeId}
+            episodeTitle={selectedEpisodeTitle}
+          />
+          <NoteList episodeId={selectedEpisodeId} />
+        </div>
+      ) : (
+        <div className="text-center text-muted-foreground p-8 border-2 border-dashed rounded-lg">
+          Please select an episode to view or add notes.
+        </div>
+      )}
     </div>
   );
 }

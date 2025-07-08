@@ -406,7 +406,7 @@ This is a comprehensive phase focused on the frontend. It involves removing all 
   };
   ```
 
-- [ ] **Task 3.4: Make the Journal Page Fully Dynamic:** Fetch episodes for the dropdown and pass the selected ID to the note components.
+- [x] **Task 3.4: Make the Journal Page Fully Dynamic:** Fetch episodes for the dropdown and pass the selected ID to the note components.
 
   - **File:** `src/app/journal/page.tsx`
   - **Action:** Replace the entire file with the following dynamic version.
