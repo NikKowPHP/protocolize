@@ -29,6 +29,7 @@
     "@supabase/supabase-js": "^2.50.0",
     "@tailwindcss/postcss": "^4.1.11",
     "@tanstack/react-query": "^5.81.5",
+    "@tanstack/react-query-devtools": "^5.81.5",
     "@testing-library/jest-dom": "^6.6.3",
     "@types/chart.js": "^2.9.41",
     "chart.js": "^4.5.0",
@@ -48,6 +49,7 @@
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.60.0",
     "recharts": "^3.0.2",
+    "stripe": "^18.3.0",
     "tailwind-merge": "^3.3.1",
     "tailwindcss": "^4.1.11",
     "zod": "^3.25.75"
