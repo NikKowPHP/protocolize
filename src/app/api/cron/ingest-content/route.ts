@@ -3,6 +3,7 @@ import { prisma } from '@/lib/db';
 import { getLatestVideos } from '@/lib/youtube/client';
 import { fetchTranscript } from '@/lib/youtube/transcript';
 import { extractProtocolsFromTranscript } from '@/lib/ai/content-processor';
+import * as Sentry from '@sentry/nextjs';
 
 export async function GET(req: NextRequest) {
   if (
@@ -72,10 +73,15 @@ export async function GET(req: NextRequest) {
       });
       processedCount++;
     } catch (error) {
-      console.error(
-        `Failed to process video ${videoId}:`,
-        error instanceof Error ? error.message : 'Unknown error',
-      );
+      Sentry.captureException(error, {
+        level: 'error',
+        tags: { videoId },
+        extra: {
+          videoTitle: video.snippet?.title,
+          videoUrl: `https://www.youtube.com/watch?v=${videoId}`,
+          errorMessage: error instanceof Error ? error.message : 'Unknown error',
+        },
+      });
     }
   }
 
