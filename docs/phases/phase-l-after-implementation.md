@@ -21,7 +21,7 @@ The following plan addresses all critical, partial, and missing implementations 
 
 *These tasks build documented features that are currently missing from the application.*
 
-- [ ] **CREATE**: Implement the logic for pre-set, foundational reminders for free-tier users.
+- [x] **CREATE**: Implement the logic for pre-set, foundational reminders for free-tier users.
     - **File**: `prisma/seeders/protocols.ts`
     - **Action**: In the `seedProtocolsAndEpisodes` function, after creating the foundational protocols, add logic to associate them with a placeholder or system user account if one existed, or modify the reminder dispatch logic to handle a global, non-user-specific reminder type. Since a system user doesn't exist, the most direct way to fulfill the story "As a free user, I can receive pre-set reminders" is to make the core protocols' reminders available to all users. A better approach is to integrate this into the main reminder feature but not gate its creation for the 3 free protocols.
     - **Reason**: Audit Finding: "User Story: '[Free] As a free user, I can receive pre-set reminders.' ... This user story is unimplemented. The documentation describes a feature that does not exist in the code."
