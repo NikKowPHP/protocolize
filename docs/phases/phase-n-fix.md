@@ -48,7 +48,7 @@ The audit identified three primary blockers: a non-functional content ingestion 
 
 *These tasks align the specification document with the reality of the codebase.*
 
-- [ ] **DOCS**: Document the existing API rate limiting feature.
+- [x] **DOCS**: Document the existing API rate limiting feature.
     - **File(s)**: `docs/app_description.md`
     - **Action**: In Section 8.3 `API & Error Handling`, add a new point: "**API Security:** Endpoints are hardened with rate limiting to prevent abuse and brute-force attacks."
     - **Reason**: Audit Finding: "Undocumented Functionality (Specification Gaps) - Feature: API Rate Limiting... This entire analytics framework is not mentioned in the specification."
