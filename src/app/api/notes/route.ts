@@ -10,6 +10,39 @@ const createNoteSchema = z.object({
 });
 
 export async function GET(req: NextRequest) {
+  const { searchParams } = new URL(req.url);
+  const episodeId = searchParams.get('episodeId');
+  const publicOnly = searchParams.get('public') === 'true';
+
+  if (!episodeId) {
+    return NextResponse.json(
+      { error: 'episodeId is required' },
+      { status: 400 },
+    );
+  }
+
+  if (publicOnly) {
+    try {
+      const notes = await prisma.note.findMany({
+        where: {
+          episodeId,
+          isPublic: true,
+        },
+        orderBy: {
+          createdAt: 'desc',
+        },
+      });
+      return NextResponse.json(notes);
+    } catch (error) {
+      console.error('Error fetching public notes:', error);
+      return NextResponse.json(
+        { error: 'Failed to fetch public notes' },
+        { status: 500 },
+      );
+    }
+  }
+
+  // Existing private notes logic
   const supabase = await createClient();
   const {
     data: { user },
@@ -18,16 +51,6 @@ export async function GET(req: NextRequest) {
 
   if (authError || !user) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
-
-  const { searchParams } = new URL(req.url);
-  const episodeId = searchParams.get('episodeId');
-
-  if (!episodeId) {
-    return NextResponse.json(
-      { error: 'episodeId is required' },
-      { status: 400 },
-    );
   }
   
   export const POST = async (req: NextRequest) => {

@@ -15,7 +15,7 @@ The work is prioritized to first implement missing critical functionality (P1), 
     - **Action**: Add a "Mark as Complete for Today" button to the UI for each protocol. This button should, when clicked, trigger a mutation that calls the `POST /api/tracking` endpoint with the `protocolId` and the current date.
     - **Reason**: Audit Finding: "[🟡 Partial] PR-030: ...no UI component was found in the codebase that allows a user to trigger this action."
 
-- [ ] **CREATE**: [PR-061]: Create the API endpoint to fetch public notes for an episode.
+- [x] **CREATE**: [PR-061]: Create the API endpoint to fetch public notes for an episode.
     - **File(s)**: `src/app/api/notes/route.ts` (or a new route like `src/app/api/notes/public/route.ts`)
     - **Action**: Create a new GET handler that accepts an `episodeId`. This handler should query the `Note` model, filtering for notes where `episodeId` matches and `isPublic` is `true`. It should not require authentication.
     - **Reason**: Audit Finding: "[❌ Unverified] PR-061: No API endpoint or UI component was found that fetches or displays public notes from other users."
