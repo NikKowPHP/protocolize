@@ -37,7 +37,7 @@ The audit identified three primary blockers: a non-functional content ingestion 
 
 *These tasks add missing, non-critical tooling specified in the documentation.*
 
-- [ ] **SETUP**: Install Sentry for error tracking.
+- [x] **SETUP**: Install Sentry for error tracking.
     - **File(s)**: `package.json`, `next.config.mjs`, and new `sentry.*.config.ts` files.
     - **Action**: Run `npm install @sentry/nextjs`. Then, create the necessary configuration files (`sentry.client.config.ts`, `sentry.server.config.ts`, `sentry.edge.config.ts`) in the project root as per Sentry's documentation, and update `next.config.mjs` to be wrapped with `withSentryConfig`.
     - **Reason**: Audit Finding: "| Observability | Sentry for Error Tracking | The Sentry SDK (`@sentry/nextjs`) is not present in `package.json`. | ❌ Gap |"
