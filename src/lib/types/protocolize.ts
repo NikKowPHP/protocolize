@@ -9,6 +9,12 @@ export interface Protocol {
   status: string;
 }
 
+export interface User {
+  id: string;
+  name: string | null;
+  email: string | null;
+}
+
 export interface Note {
   id: string;
   userId: string;
@@ -16,6 +22,7 @@ export interface Note {
   content: string;
   isPublic: boolean;
   createdAt: string;
+  user?: User;
 }
 
 export interface Summary {

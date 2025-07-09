@@ -2,6 +2,20 @@
 
 import { NoteEditor } from '@/components/note-editor';
 import { NoteList } from '@/components/note-list';
+import { PublicNotesList } from '@/components/public-notes-list';
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from '@/components/ui/tabs';
+import { PublicNotesList } from '@/components/public-notes-list';
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from '@/components/ui/tabs';
 import {
   Select,
   SelectContent,
@@ -55,12 +69,23 @@ export default function JournalPage() {
       </div>
 
       {selectedEpisodeId ? (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="space-y-6">
           <NoteEditor
             episodeId={selectedEpisodeId}
             episodeTitle={selectedEpisodeTitle}
           />
-          <NoteList episodeId={selectedEpisodeId} />
+          <Tabs defaultValue="personal" className="w-full">
+            <TabsList className="grid w-full grid-cols-2">
+              <TabsTrigger value="personal">Your Notes</TabsTrigger>
+              <TabsTrigger value="community">Community Notes</TabsTrigger>
+            </TabsList>
+            <TabsContent value="personal">
+              <NoteList episodeId={selectedEpisodeId} />
+            </TabsContent>
+            <TabsContent value="community">
+              <PublicNotesList episodeId={selectedEpisodeId} />
+            </TabsContent>
+          </Tabs>
         </div>
       ) : (
         <div className="text-center text-muted-foreground p-8 border-2 border-dashed rounded-lg">

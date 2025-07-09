@@ -2,8 +2,13 @@ import { Note } from '@/lib/types/protocolize';
 
 export const getNotesForEpisode = async (
   episodeId: string,
+  publicOnly: boolean = false
 ): Promise<Note[]> => {
-  const res = await fetch(`/api/notes?episodeId=${episodeId}`);
+  const url = publicOnly
+    ? `/api/notes?episodeId=${episodeId}&public=true`
+    : `/api/notes?episodeId=${episodeId}`;
+  
+  const res = await fetch(url);
   if (!res.ok) throw new Error('Failed to fetch notes');
   return res.json();
 };

@@ -20,7 +20,7 @@ The work is prioritized to first implement missing critical functionality (P1), 
     - **Action**: Create a new GET handler that accepts an `episodeId`. This handler should query the `Note` model, filtering for notes where `episodeId` matches and `isPublic` is `true`. It should not require authentication.
     - **Reason**: Audit Finding: "[❌ Unverified] PR-061: No API endpoint or UI component was found that fetches or displays public notes from other users."
 
-- [ ] **CREATE**: [PR-061]: Create the UI component to display public notes.
+- [x] **CREATE**: [PR-061]: Create the UI component to display public notes.
     - **File(s)**: `src/app/journal/page.tsx` (or a new `PublicNotesList.tsx` component)
     - **Action**: Create a new component that fetches data from the public notes API endpoint created in the previous step. It should render a list of public notes, including their content and potentially the author's name (if available and privacy allows). This component should be displayed on the journal page or a relevant episode detail page.
     - **Reason**: Audit Finding: "[❌ Unverified] PR-061: No API endpoint or UI component was found that fetches or displays public notes from other users."
