@@ -21,7 +21,7 @@ The audit identified three primary blockers: a non-functional content ingestion 
 
 *These tasks address broken or unimplemented user stories.*
 
-- [ ] **CREATE**: [PR-003]: Implement the missing `ForgotPasswordForm` component.
+- [x] **CREATE**: [PR-003]: Implement the missing `ForgotPasswordForm` component.
     - **File(s)**: `src/components/ForgotPasswordForm.tsx`, `src/app/forgot-password/page.tsx`
     - **Action**: Create a new file `src/components/ForgotPasswordForm.tsx`. This component will contain a form with an email input and a submit button. The form's submit handler should call `supabase.auth.resetPasswordForEmail`. Then, update `src/app/forgot-password/page.tsx` to import and render this new component.
     - **Reason**: Audit Finding: "The page at `src/app/forgot-password/page.tsx` attempts to import a component named `ForgotPasswordForm` which is not present in the codebase. This will cause a runtime error, making the feature non-functional."
