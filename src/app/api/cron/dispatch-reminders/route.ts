@@ -22,12 +22,11 @@ export async function GET(req: NextRequest) {
   }
 
   const now = new Date();
-  const dueReminders = await prisma.reminder.findMany({
+  const currentTimeFormatted = now.toISOString();
+  const dueReminders = await prisma.userReminder.findMany({
     where: {
-      scheduledAt: {
-        lte: now,
-      },
-      status: 'PENDING',
+      isActive: true,
+      reminderTime: currentTimeFormatted,
     },
     include: {
       user: {
@@ -59,14 +58,17 @@ export async function GET(req: NextRequest) {
       // Send to all of user's devices
       for (const subscription of reminder.user.pushSubscriptions) {
         await webpush.sendNotification(
-          JSON.parse(subscription.subscription),
+          {
+            endpoint: subscription.endpoint,
+            keys: subscription.keys as { p256dh: string; auth: string }
+          },
           JSON.stringify(notificationPayload),
         );
       }
 
-      await prisma.reminder.update({
+      await prisma.userReminder.update({
         where: { id: reminder.id },
-        data: { status: 'COMPLETED' },
+        data: { isActive: false },
       });
       sentCount++;
     } catch (error) {
