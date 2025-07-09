@@ -10,8 +10,11 @@ import {
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
+import { Switch } from '@/components/ui/switch';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { createNote } from '@/lib/api/notes';
 import { useForm } from 'react-hook-form';
+import { useUser } from '@/lib/user';
 
 interface NoteEditorProps {
   episodeId: string;
@@ -20,11 +23,18 @@ interface NoteEditorProps {
 
 type FormData = {
   content: string;
+  isPublic: boolean;
 };
 
 export const NoteEditor = ({ episodeId, episodeTitle }: NoteEditorProps) => {
   const queryClient = useQueryClient();
-  const { register, handleSubmit, reset } = useForm<FormData>();
+  const { user } = useUser();
+  const { register, handleSubmit, reset, watch } = useForm<FormData>({
+    defaultValues: {
+      isPublic: false
+    }
+  });
+  const isPublic = watch('isPublic');
 
   const mutation = useMutation({
     mutationFn: createNote,
@@ -38,7 +48,11 @@ export const NoteEditor = ({ episodeId, episodeTitle }: NoteEditorProps) => {
   });
 
   const onSubmit = (data: FormData) => {
-    mutation.mutate({ episodeId, content: data.content });
+    mutation.mutate({
+      episodeId,
+      content: data.content,
+      isPublic: data.isPublic
+    });
   };
 
   return (
@@ -59,13 +73,31 @@ export const NoteEditor = ({ episodeId, episodeTitle }: NoteEditorProps) => {
               {...register('content', { required: true })}
             />
           </div>
-          <Button
-            type="submit"
-            className="w-full"
-            disabled={mutation.isPending}
-          >
-            {mutation.isPending ? 'Saving...' : 'Save Note'}
-          </Button>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-2">
+              <Switch
+                id="public-note"
+                {...register('isPublic')}
+                disabled={user?.subscriptionTier !== 'Premium'}
+              />
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Label htmlFor="public-note">Make Public</Label>
+                </TooltipTrigger>
+                {user?.subscriptionTier !== 'Premium' && (
+                  <TooltipContent>
+                    <p>Public notes are a premium feature</p>
+                  </TooltipContent>
+                )}
+              </Tooltip>
+            </div>
+            <Button
+              type="submit"
+              disabled={mutation.isPending}
+            >
+              {mutation.isPending ? 'Saving...' : 'Save Note'}
+            </Button>
+          </div>
         </form>
       </CardContent>
     </Card>

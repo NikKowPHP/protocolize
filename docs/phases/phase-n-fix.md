@@ -36,7 +36,7 @@ The work is prioritized to first implement missing critical functionality (P1), 
     - **Action**: In the `catch` block of the main `try...catch` statement, add logic to send an alert. This can be achieved by integrating a service like Sentry to capture the error with a high severity level or by using a simple email service. The existing `console.error` should be augmented with this notification.
     - **Reason**: Audit Finding: "[🟡 Partial] PR-SYS-010: ...there is no implementation for actively notifying an admin (e.g., via email or another service)."
 
-- [ ] **UPDATE**: [PR-060]: Add a UI switch to the Note Editor for making a note public.
+- [x] **UPDATE**: [PR-060]: Add a UI switch to the Note Editor for making a note public.
     - **File(s)**: `src/components/note-editor.tsx`
     - **Action**: Within the `NoteEditor` component's form, add a `Switch` component from `shadcn/ui` bound to a new form field, `isPublic`. Ensure this switch is disabled and shows a tooltip or message indicating it's a "Premium feature" if the user is not on the premium tier. The value of this switch must be passed in the `createNote` mutation payload.
     - **Reason**: Audit Finding: "[🟡 Partial] PR-060: ...the `NoteEditor` component ... does not include a switch or checkbox to set this flag."
