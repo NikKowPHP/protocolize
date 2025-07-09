@@ -1,12 +1,16 @@
-# Assistance Required: Phase I File Content Issue
+# Assistance Needed: Manual Database Operation Required
 
-**Problem:**  
-The system keeps returning Phase H content when attempting to read `docs/phases/phase-i-admin-content-curation-dashboard.md`. This prevents progress on Phase I implementation.
+## Task Details
+- **Phase:** Phase I (Admin Content Curation Dashboard)
+- **Task:** 3.1: Promote a User to Admin
+- **File:** docs/phases/phase-i-admin-content-curation-dashboard.md
 
-**Details:**
-- Phase I file exists in directory but returns wrong content
-- Multiple read attempts confirmed the issue persists
-- Cannot proceed with Admin Dashboard implementation without correct file
+## Issue Description
+The task requires manually promoting a user to ADMIN role in the database. As an AI, I cannot perform manual database operations. Here are the steps needed:
 
-**Request:**
-Please provide the correct content for Phase I or investigate the file system issue.
+1. Connect to your database (e.g., using `npx prisma studio`)
+2. Find your test user in the `User` table
+3. Change their `role` from `"USER"` to `"ADMIN"`
+4. Save the change
+
+After this manual step is completed, the development can continue with Task 3.2 to verify admin access.
