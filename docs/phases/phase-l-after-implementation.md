@@ -47,7 +47,7 @@ The following plan addresses all critical, partial, and missing implementations 
     - **Action**: Create a new file with exported async functions `getReminders`, `createReminder`, `updateReminder`, and `deleteReminder`. These functions should call the corresponding API endpoints (`/api/reminders` and `/api/reminders/[reminderId]`) with `fetch`.
     - **Reason**: Audit Gap: The `ReminderList` and `ReminderForm` components are static and need a client library to interact with the backend API.
 
-- [ ] **UPDATE**: Make the `ReminderList` component fully dynamic.
+- [x] **UPDATE**: Make the `ReminderList` component fully dynamic.
     - **File**: `src/components/reminder-list.tsx`
     - **Action**: Replace the static `MOCK_REMINDERS` data with a `useQuery` hook from `@tanstack/react-query` that calls the `getReminders` function. Implement a `useMutation` hook for the "Remove" button to call `deleteReminder` and invalidate the query on success.
     - **Reason**: Audit Finding: "The frontend components (`src/components/reminder-form.tsx`, `src/components/reminder-list.tsx`) are static mockups and were never integrated with the API."
