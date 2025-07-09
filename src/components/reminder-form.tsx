@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -17,11 +18,17 @@ import { createReminder } from '@/lib/api/reminders';
 type FormData = {
   protocolId: string;
   reminderTime: string;
+  timezone: string;
 };
 
 export const ReminderForm = () => {
   const queryClient = useQueryClient();
-  const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
+  const { register, handleSubmit, formState: { errors }, setValue } = useForm<FormData>();
+
+  useEffect(() => {
+    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    setValue('timezone', timezone);
+  }, [setValue]);
 
   const { data: protocols, isLoading: protocolsLoading } = useQuery({
     queryKey: ['protocols'],
@@ -38,7 +45,8 @@ export const ReminderForm = () => {
   const onSubmit = (data: FormData) => {
     createMutation.mutate({
       protocolId: data.protocolId,
-      reminderTime: data.reminderTime
+      reminderTime: data.reminderTime,
+      timezone: data.timezone
     });
   };
 

@@ -21,12 +21,9 @@ export async function GET(req: NextRequest) {
     return new NextResponse('Unauthorized', { status: 401 });
   }
 
-  const now = new Date();
-  const currentTimeFormatted = now.toISOString();
-  const dueReminders = await prisma.userReminder.findMany({
+  const activeReminders = await prisma.userReminder.findMany({
     where: {
       isActive: true,
-      reminderTime: currentTimeFormatted,
     },
     include: {
       user: {
@@ -44,8 +41,23 @@ export async function GET(req: NextRequest) {
 
   let sentCount = 0;
   let failedCount = 0;
+  const now = new Date();
 
-  for (const reminder of dueReminders) {
+  for (const reminder of activeReminders) {
+    // Get current time in reminder's timezone
+    const currentTimeInTz = now.toLocaleTimeString('en-GB', {
+      timeZone: reminder.timezone,
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false
+    }).replace(/:/g, '');
+
+    // Compare with reminder time (stored as HH:mm)
+    const reminderTimeFormatted = reminder.reminderTime.replace(/:/g, '');
+    
+    if (currentTimeInTz !== reminderTimeFormatted) {
+      continue; // Skip if times don't match
+    }
     try {
       const notificationPayload = {
         title: 'Protocolize Reminder',
