@@ -32,7 +32,7 @@ The following plan addresses all critical, partial, and missing implementations 
 
 *These tasks modify existing code to match documented specifications and connect partially implemented features.*
 
-- [ ] **REFACTOR**: Remove unused AI Question Generation service code.
+- [x] **REFACTOR**: Remove unused AI Question Generation service code.
     - **File**: `src/lib/ai/`
     - **Action**: Delete the entire `src/lib/ai/` directory and all its contents (`gemini-service.ts`, `generation-service.ts`, `index.ts`).
     - **Reason**: Audit Finding: "Undocumented Functionality: AI Question Generation Service... This functionality is completely unrelated to the Protocolize application's documented purpose... and should be removed."
