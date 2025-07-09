@@ -62,7 +62,7 @@ The following plan addresses all critical, partial, and missing implementations 
     - **Action**: Create a new file with exported async functions `getTrackingLogs` and `createTrackingLog`. These functions should call the corresponding API endpoints (`/api/tracking`).
     - **Reason**: Audit Gap: The `AdherenceCalendar` and `AnalyticsCharts` components are static and need a client library to interact with the backend API.
 
-- [ ] **UPDATE**: Make the `AdherenceCalendar` and `AnalyticsCharts` components dynamic.
+- [x] **UPDATE**: Make the `AdherenceCalendar` and `AnalyticsCharts` components dynamic.
     - **Files**: `src/components/adherence-calendar.tsx`, `src/components/analytics-charts.tsx`
     - **Action**: In both components, replace the static `MOCK_DAYS` and `MOCK_DATA` with a `useQuery` hook that calls `getTrackingLogs`. Process the fetched data to render the user's actual adherence and progress.
     - **Reason**: Audit Finding: "The frontend components (`src/components/adherence-calendar.tsx`, `src/components/analytics-charts.tsx`) are static mockups using hardcoded data."
