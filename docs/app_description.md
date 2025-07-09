@@ -81,7 +81,6 @@ graph TD
 
 ## 4. Key NPM Libraries & Tooling
 
-- **State Management:** `zustand` (Minimal, fast, and scalable state management)
 - **Data Fetching & Mutation:** `@tanstack/react-query` (Manages server state, caching, and optimistic updates)
 - **Forms:** `react-hook-form` (High-performance, flexible form validation)
 - **Schema Validation:** `zod` (TypeScript-first schema validation for API inputs, forms, and environment variables)

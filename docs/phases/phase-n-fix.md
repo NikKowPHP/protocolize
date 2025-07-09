@@ -53,7 +53,7 @@ The audit identified three primary blockers: a non-functional content ingestion 
     - **Action**: In Section 8.3 `API & Error Handling`, add a new point: "**API Security:** Endpoints are hardened with rate limiting to prevent abuse and brute-force attacks."
     - **Reason**: Audit Finding: "Undocumented Functionality (Specification Gaps) - Feature: API Rate Limiting... This entire analytics framework is not mentioned in the specification."
 
-- [ ] **DOCS**: Remove 'zustand' from the list of specified NPM libraries.
+- [x] **DOCS**: Remove 'zustand' from the list of specified NPM libraries.
     - **File(s)**: `docs/app_description.md`
     - **Action**: In Section 4 `Key NPM Libraries & Tooling`, delete the line item for "State Management: `zustand`...".
     - **Reason**: Audit Finding: "| State Management | `zustand` | The `zustand` package is not present in `package.json`. | ⚠️ Minor Gap |"
