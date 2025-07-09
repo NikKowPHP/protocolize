@@ -1,59 +1,53 @@
-Of course. Based on the comprehensive SpecCheck audit, here is the prioritized, atomic, and fully explicit implementation plan designed to bring the codebase into 100% compliance with its specification.
+### **Implementation Plan: Achieving 100% Specification Compliance for Protocolize**
 
-### **Project Manager's Summary**
+This document outlines the prioritized, atomic work plan required to address all discrepancies identified in the SpecCheck audit report. The plan is structured to be executed by an AI developer agent, ensuring a systematic path to full compliance with the `app_description.md` specification.
 
-The audit identified three primary blockers: a non-functional content ingestion pipeline due to a missing AI service, a broken password reset flow from a missing UI component, and a logic error in the database seeder preventing a key free-tier feature from working. This plan prioritizes fixing these issues in a logical order: first, the critical backend failure (P0), then the broken user-facing features (P1), followed by integrating missing dev-ops tooling (P2) and finally, cleaning up documentation (P3).
-
----
-
-### **P0 - Critical Fixes**
-
-*This task resolves a severe bug that causes a core backend system to fail at runtime.*
-
-- [x] **CREATE**: [PR-SYS-008]: Implement the AI Content Processor service.
-    - **File(s)**: `src/lib/ai/content-processor.ts`
-    - **Action**: Create the directory `src/lib/ai`. Inside it, create the file `content-processor.ts` with the complete function `extractProtocolsFromTranscript`. This function should initialize the Google Generative AI client and contain the specific prompt logic to parse a transcript into a structured JSON object containing `episodeSummary` and an array of `protocols`.
-    - **Reason**: Audit Finding: "The entire content ingestion epic is non-functional. The cron job route at `src/app/api/cron/ingest-content/route.ts` attempts to import from `@/lib/ai/content-processor`. This file, and the entire `src/lib/ai` directory, is missing."
+The work is prioritized to first implement missing critical functionality (P1), then correct partial implementations (P2), and finally update the documentation to reflect implemented but undocumented features (P3). There are no P0-level critical bugs to fix.
 
 ---
 
 ### **P1 - Missing Feature Implementation**
 
-*These tasks address broken or unimplemented user stories.*
+*This tier focuses on creating entirely missing features, primarily the UI for premium functionality and the full implementation of community features.*
 
-- [x] **CREATE**: [PR-003]: Implement the missing `ForgotPasswordForm` component.
-    - **File(s)**: `src/components/ForgotPasswordForm.tsx`, `src/app/forgot-password/page.tsx`
-    - **Action**: Create a new file `src/components/ForgotPasswordForm.tsx`. This component will contain a form with an email input and a submit button. The form's submit handler should call `supabase.auth.resetPasswordForEmail`. Then, update `src/app/forgot-password/page.tsx` to import and render this new component.
-    - **Reason**: Audit Finding: "The page at `src/app/forgot-password/page.tsx` attempts to import a component named `ForgotPasswordForm` which is not present in the codebase. This will cause a runtime error, making the feature non-functional."
+- [x] **CREATE**: [PR-030]: Create the UI button for logging protocol adherence.
+    - **File(s)**: `src/components/protocol-card.tsx` (or a new component if more appropriate, like a protocol detail page)
+    - **Action**: Add a "Mark as Complete for Today" button to the UI for each protocol. This button should, when clicked, trigger a mutation that calls the `POST /api/tracking` endpoint with the `protocolId` and the current date.
+    - **Reason**: Audit Finding: "[🟡 Partial] PR-030: ...no UI component was found in the codebase that allows a user to trigger this action."
 
-- [x] **UPDATE**: [PR-011]: Correctly seed foundational protocols as 'free' and 'published'.
-    - **File(s)**: `prisma/seeders/protocols.ts`
-    - **Action**: In the `foundationalProtocols` array, iterate through each protocol object and ensure the properties `isFree: true` and `status: 'PUBLISHED'` are present.
-    - **Reason**: Audit Finding: "The seeder at `prisma/seeders/protocols.ts` creates the foundational protocols but fails to set `isFree: true`. As a result, no foundational reminders are ever created for new users."
+- [ ] **CREATE**: [PR-061]: Create the API endpoint to fetch public notes for an episode.
+    - **File(s)**: `src/app/api/notes/route.ts` (or a new route like `src/app/api/notes/public/route.ts`)
+    - **Action**: Create a new GET handler that accepts an `episodeId`. This handler should query the `Note` model, filtering for notes where `episodeId` matches and `isPublic` is `true`. It should not require authentication.
+    - **Reason**: Audit Finding: "[❌ Unverified] PR-061: No API endpoint or UI component was found that fetches or displays public notes from other users."
+
+- [ ] **CREATE**: [PR-061]: Create the UI component to display public notes.
+    - **File(s)**: `src/app/journal/page.tsx` (or a new `PublicNotesList.tsx` component)
+    - **Action**: Create a new component that fetches data from the public notes API endpoint created in the previous step. It should render a list of public notes, including their content and potentially the author's name (if available and privacy allows). This component should be displayed on the journal page or a relevant episode detail page.
+    - **Reason**: Audit Finding: "[❌ Unverified] PR-061: No API endpoint or UI component was found that fetches or displays public notes from other users."
 
 ---
 
 ### **P2 - Mismatches & Corrections**
 
-*These tasks add missing, non-critical tooling specified in the documentation.*
+*This tier focuses on updating existing components and backend logic to fully satisfy their user stories and technical requirements.*
 
-- [x] **SETUP**: Install Sentry for error tracking.
-    - **File(s)**: `package.json`, `next.config.mjs`, and new `sentry.*.config.ts` files.
-    - **Action**: Run `npm install @sentry/nextjs`. Then, create the necessary configuration files (`sentry.client.config.ts`, `sentry.server.config.ts`, `sentry.edge.config.ts`) in the project root as per Sentry's documentation, and update `next.config.mjs` to be wrapped with `withSentryConfig`.
-    - **Reason**: Audit Finding: "| Observability | Sentry for Error Tracking | The Sentry SDK (`@sentry/nextjs`) is not present in `package.json`. | ❌ Gap |"
+- [ ] **UPDATE**: [PR-SYS-010]: Implement admin notifications for content ingestion failures.
+    - **File(s)**: `src/app/api/cron/ingest-content/route.ts`
+    - **Action**: In the `catch` block of the main `try...catch` statement, add logic to send an alert. This can be achieved by integrating a service like Sentry to capture the error with a high severity level or by using a simple email service. The existing `console.error` should be augmented with this notification.
+    - **Reason**: Audit Finding: "[🟡 Partial] PR-SYS-010: ...there is no implementation for actively notifying an admin (e.g., via email or another service)."
+
+- [ ] **UPDATE**: [PR-060]: Add a UI switch to the Note Editor for making a note public.
+    - **File(s)**: `src/components/note-editor.tsx`
+    - **Action**: Within the `NoteEditor` component's form, add a `Switch` component from `shadcn/ui` bound to a new form field, `isPublic`. Ensure this switch is disabled and shows a tooltip or message indicating it's a "Premium feature" if the user is not on the premium tier. The value of this switch must be passed in the `createNote` mutation payload.
+    - **Reason**: Audit Finding: "[🟡 Partial] PR-060: ...the `NoteEditor` component ... does not include a switch or checkbox to set this flag."
 
 ---
 
 ### **P3 - Documentation Updates**
 
-*These tasks align the specification document with the reality of the codebase.*
+*This final tier brings the project's documentation into alignment with the fully-implemented codebase.*
 
-- [x] **DOCS**: Document the existing API rate limiting feature.
+- [ ] **DOCS**: Document the API rate-limiting feature.
     - **File(s)**: `docs/app_description.md`
-    - **Action**: In Section 8.3 `API & Error Handling`, add a new point: "**API Security:** Endpoints are hardened with rate limiting to prevent abuse and brute-force attacks."
-    - **Reason**: Audit Finding: "Undocumented Functionality (Specification Gaps) - Feature: API Rate Limiting... This entire analytics framework is not mentioned in the specification."
-
-- [x] **DOCS**: Remove 'zustand' from the list of specified NPM libraries.
-    - **File(s)**: `docs/app_description.md`
-    - **Action**: In Section 4 `Key NPM Libraries & Tooling`, delete the line item for "State Management: `zustand`...".
-    - **Reason**: Audit Finding: "| State Management | `zustand` | The `zustand` package is not present in `package.json`. | ⚠️ Minor Gap |"
+    - **Action**: In Section `8.3. API & Error Handling`, add a new subsection or bullet point for "API Security". The text should state: "Endpoints are hardened with rate limiting to prevent abuse and brute-force attacks on sensitive routes like authentication."
+    - **Reason**: Audit Finding: "Undocumented Functionality ... A custom memory-based rate limiter (`authRateLimiter`) has been implemented and applied to all authentication-related API endpoints...This entire ... framework is not mentioned in the specification."
