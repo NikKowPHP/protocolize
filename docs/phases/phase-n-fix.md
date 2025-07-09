@@ -47,7 +47,7 @@ The work is prioritized to first implement missing critical functionality (P1), 
 
 *This final tier brings the project's documentation into alignment with the fully-implemented codebase.*
 
-- [ ] **DOCS**: Document the API rate-limiting feature.
+- [x] **DOCS**: Document the API rate-limiting feature.
     - **File(s)**: `docs/app_description.md`
     - **Action**: In Section `8.3. API & Error Handling`, add a new subsection or bullet point for "API Security". The text should state: "Endpoints are hardened with rate limiting to prevent abuse and brute-force attacks on sensitive routes like authentication."
     - **Reason**: Audit Finding: "Undocumented Functionality ... A custom memory-based rate limiter (`authRateLimiter`) has been implemented and applied to all authentication-related API endpoints...This entire ... framework is not mentioned in the specification."

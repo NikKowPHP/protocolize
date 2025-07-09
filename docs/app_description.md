@@ -298,7 +298,7 @@ The application will be built with a **mobile-first** philosophy. All UI will be
 
 - **API Responses:** All successful API responses will be structured consistently.
 - **Error Handling:** API routes will use centralized error handling to return consistent, structured error responses.
-- **API Security:** Endpoints are hardened with rate limiting to prevent abuse and brute-force attacks.
+- **API Security:** Endpoints are hardened with rate limiting to prevent abuse and brute-force attacks on sensitive routes like authentication.
 
 ### 8.4. Accessibility (A11y)
 
