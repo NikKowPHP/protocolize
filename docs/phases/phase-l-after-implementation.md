@@ -37,7 +37,7 @@ The following plan addresses all critical, partial, and missing implementations 
     - **Action**: Delete the entire `src/lib/ai/` directory and all its contents (`gemini-service.ts`, `generation-service.ts`, `index.ts`).
     - **Reason**: Audit Finding: "Undocumented Functionality: AI Question Generation Service... This functionality is completely unrelated to the Protocolize application's documented purpose... and should be removed."
 
-- [ ] **REFACTOR**: Remove unused and redundant UI components.
+- [x] **REFACTOR**: Remove unused and redundant UI components.
     - **Files**: `src/components/flashcard.tsx`, `src/components/SignInForm.tsx`, `src/components/SignUpForm.tsx`, `src/components/ForgotPasswordForm.tsx`
     - **Action**: Delete these four component files from the codebase.
     - **Reason**: Audit Finding: "Undocumented Functionality: Unused UI Components... These components are present in the codebase but are not imported or used by any active page... Remove these unused components."
