@@ -1,46 +1,51 @@
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
-if (!process.env.GEMINI_API_KEY) {
-  throw new Error('GEMINI_API_KEY is not defined.');
+export interface Protocol {
+  title: string;
+  description: string;
+  steps: string[];
 }
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+export interface TranscriptAnalysis {
+  episodeSummary: string;
+  protocols: Protocol[];
+}
 
-export async function extractProtocolsFromTranscript(transcript: string) {
+export async function extractProtocolsFromTranscript(transcript: string): Promise<TranscriptAnalysis> {
+  const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY || '');
+  const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+
   const prompt = `
-    Analyze the following podcast transcript. Your task is to extract actionable health and wellness protocols.
-    For each protocol found, provide its name, a concise description, a step-by-step implementation guide, and a relevant category (e.g., "Sleep", "Focus", "Nutrition", "Fitness", "Mental Health", "Circadian Rhythm").
-    Additionally, create a main summary for the entire episode.
-    Return the data as a single, minified JSON object with no markdown formatting. The structure should be:
+    Analyze this podcast transcript and extract:
+    1. A concise episode summary (2-3 sentences)
+    2. A list of protocols mentioned, where each protocol has:
+       - A clear title
+       - A brief description 
+       - Step-by-step instructions
+    
+    Return the analysis as valid JSON with this structure:
     {
-      "episodeSummary": "string",
+      "episodeSummary": string,
       "protocols": [
         {
-          "name": "string",
-          "category": "string",
-          "description": "string",
-          "implementationGuide": "string"
+          "title": string,
+          "description": string,
+          "steps": string[]
         }
       ]
     }
-    
+
     Transcript:
-    ---
-    ${transcript.substring(0, 30000)}
-    ---
+    ${transcript}
   `;
 
+  const result = await model.generateContent(prompt);
+  const response = await result.response;
+  const text = response.text();
+
   try {
-    const result = await model.generateContent(prompt);
-    const responseText = result.response.text();
-    const cleanedJson = responseText
-      .replace(/```json/g, '')
-      .replace(/```/g, '')
-      .trim();
-    return JSON.parse(cleanedJson);
-  } catch (error) {
-    console.error('Error processing transcript with Gemini:', error);
-    throw new Error('Failed to parse AI response.');
+    return JSON.parse(text) as TranscriptAnalysis;
+  } catch (err) {
+    throw new Error(`Failed to parse AI response: ${err}`);
   }
 }

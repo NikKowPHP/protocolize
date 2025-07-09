@@ -1,45 +1,59 @@
-Of course. Based on the latest audit, the primary remaining work is to fix the non-functional reminder system and its related components. Here is the comprehensive, prioritized implementation plan designed to bring the codebase into full compliance with its documentation.
+Of course. Based on the comprehensive SpecCheck audit, here is the prioritized, atomic, and fully explicit implementation plan designed to bring the codebase into 100% compliance with its specification.
 
 ### **Project Manager's Summary**
 
-The audit has revealed that while most features are implemented, the entire **Reminder system** is non-functional due to a critical bug in the dispatch logic and incomplete implementation on the frontend. This plan prioritizes fixing this system. The work is broken down into three logical steps: first, fixing the frontend form to capture all necessary data (P1); second, fixing the backend dispatch logic to correctly process that data (P2); and finally, adding the missing logic to provide default reminders to new users (P2).
+The audit identified three primary blockers: a non-functional content ingestion pipeline due to a missing AI service, a broken password reset flow from a missing UI component, and a logic error in the database seeder preventing a key free-tier feature from working. This plan prioritizes fixing these issues in a logical order: first, the critical backend failure (P0), then the broken user-facing features (P1), followed by integrating missing dev-ops tooling (P2) and finally, cleaning up documentation (P3).
 
 ---
 
-### **P0 - Critical Code Fixes**
+### **P0 - Critical Fixes**
 
-*(No tasks in this category, as the primary bug is a functional failure rather than a system-crashing error. It is addressed as a high-priority partial implementation fix in P2.)*
+*This task resolves a severe bug that causes a core backend system to fail at runtime.*
 
----
-
-### **P1 - Implementation of Missing Features**
-
-- [x] **CREATE**: Automatically create default reminders for new users on registration.
-    - **File**: `src/lib/user.ts`
-    - **Action**: In the `ensureUserInDb` function, after the `const newUser = await prisma.user.create(...)` call, add new logic. This logic should query the database for the three foundational protocols (e.g., where `isFree: true`). Then, for each of these protocols, create a corresponding `UserReminder` record linked to the `newUser.id`. Use default times (e.g., '08:00', '13:00') and a default `timezone` of 'UTC'.
-    - **Reason**: To correctly implement the user story "As a free user, I can receive pre-set reminders," which the audit identified as unfulfilled.
+- [x] **CREATE**: [PR-SYS-008]: Implement the AI Content Processor service.
+    - **File(s)**: `src/lib/ai/content-processor.ts`
+    - **Action**: Create the directory `src/lib/ai`. Inside it, create the file `content-processor.ts` with the complete function `extractProtocolsFromTranscript`. This function should initialize the Google Generative AI client and contain the specific prompt logic to parse a transcript into a structured JSON object containing `episodeSummary` and an array of `protocols`.
+    - **Reason**: Audit Finding: "The entire content ingestion epic is non-functional. The cron job route at `src/app/api/cron/ingest-content/route.ts` attempts to import from `@/lib/ai/content-processor`. This file, and the entire `src/lib/ai` directory, is missing."
 
 ---
 
-### **P2 - Correcting Mismatches & Partial Implementations**
+### **P1 - Missing Feature Implementation**
 
-- [ ] **UPDATE**: Enhance the `ReminderForm` to capture the user's timezone.
-    - **File**: `src/components/reminder-form.tsx`
-    - **Action**: Modify the form to include a hidden input for the timezone. Use a `useEffect` hook to set this input's value automatically with `Intl.DateTimeFormat().resolvedOptions().timeZone`. Ensure this `timezone` field is included in the data submitted by the form.
-    - **Reason**: The backend API for creating reminders requires a `timezone`, but the frontend form was not providing it. This is a critical part of making the reminder feature functional.
+*These tasks address broken or unimplemented user stories.*
 
-- [ ] **UPDATE**: Pass the timezone when creating a reminder.
-    - **File**: `src/components/reminder-form.tsx`
-    - **Action**: In the `onSubmit` function, update the `createMutation.mutate` call to include the `timezone` value from the form data, so the payload matches the API's expectation: `{ protocolId, reminderTime, timezone }`.
-    - **Reason**: To complete the frontend portion of the reminder creation workflow, ensuring all necessary data is sent to the API.
+- [ ] **CREATE**: [PR-003]: Implement the missing `ForgotPasswordForm` component.
+    - **File(s)**: `src/components/ForgotPasswordForm.tsx`, `src/app/forgot-password/page.tsx`
+    - **Action**: Create a new file `src/components/ForgotPasswordForm.tsx`. This component will contain a form with an email input and a submit button. The form's submit handler should call `supabase.auth.resetPasswordForEmail`. Then, update `src/app/forgot-password/page.tsx` to import and render this new component.
+    - **Reason**: Audit Finding: "The page at `src/app/forgot-password/page.tsx` attempts to import a component named `ForgotPasswordForm` which is not present in the codebase. This will cause a runtime error, making the feature non-functional."
 
-- [ ] **FIX**: Correct the time-matching logic in the reminder dispatch cron job.
-    - **File**: `src/app/api/cron/dispatch-reminders/route.ts`
-    - **Action**: Rewrite the `GET` handler's logic. Instead of querying with a flawed `where` clause, fetch all active reminders first: `prisma.userReminder.findMany({ where: { isActive: true }, ... })`. Then, iterate through these reminders in the code. For each reminder, get the current time in the reminder's specific `timezone` using `new Date().toLocaleTimeString('en-GB', { timeZone: reminder.timezone, hour: '2-digit', minute: '2-digit' })` and compare this `HH:mm` string with the `reminder.reminderTime`. Dispatch notifications only for the reminders that match.
-    - **Reason**: Audit Finding: "The logic in this route compares a full ISO timestamp with a simple 'HH:mm' time string, meaning the findMany query will never return any reminders. This must be fixed for the core reminder feature to work."
+- [ ] **UPDATE**: [PR-011]: Correctly seed foundational protocols as 'free' and 'published'.
+    - **File(s)**: `prisma/seeders/protocols.ts`
+    - **Action**: In the `foundationalProtocols` array, iterate through each protocol object and ensure the properties `isFree: true` and `status: 'PUBLISHED'` are present.
+    - **Reason**: Audit Finding: "The seeder at `prisma/seeders/protocols.ts` creates the foundational protocols but fails to set `isFree: true`. As a result, no foundational reminders are ever created for new users."
+
+---
+
+### **P2 - Mismatches & Corrections**
+
+*These tasks add missing, non-critical tooling specified in the documentation.*
+
+- [ ] **SETUP**: Install Sentry for error tracking.
+    - **File(s)**: `package.json`, `next.config.mjs`, and new `sentry.*.config.ts` files.
+    - **Action**: Run `npm install @sentry/nextjs`. Then, create the necessary configuration files (`sentry.client.config.ts`, `sentry.server.config.ts`, `sentry.edge.config.ts`) in the project root as per Sentry's documentation, and update `next.config.mjs` to be wrapped with `withSentryConfig`.
+    - **Reason**: Audit Finding: "| Observability | Sentry for Error Tracking | The Sentry SDK (`@sentry/nextjs`) is not present in `package.json`. | ❌ Gap |"
 
 ---
 
 ### **P3 - Documentation Updates**
 
-*(No tasks in this category as all identified discrepancies require code changes.)*
+*These tasks align the specification document with the reality of the codebase.*
+
+- [ ] **DOCS**: Document the existing API rate limiting feature.
+    - **File(s)**: `docs/app_description.md`
+    - **Action**: In Section 8.3 `API & Error Handling`, add a new point: "**API Security:** Endpoints are hardened with rate limiting to prevent abuse and brute-force attacks."
+    - **Reason**: Audit Finding: "Undocumented Functionality (Specification Gaps) - Feature: API Rate Limiting... This entire analytics framework is not mentioned in the specification."
+
+- [ ] **DOCS**: Remove 'zustand' from the list of specified NPM libraries.
+    - **File(s)**: `docs/app_description.md`
+    - **Action**: In Section 4 `Key NPM Libraries & Tooling`, delete the line item for "State Management: `zustand`...".
+    - **Reason**: Audit Finding: "| State Management | `zustand` | The `zustand` package is not present in `package.json`. | ⚠️ Minor Gap |"
