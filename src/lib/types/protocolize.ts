@@ -42,3 +42,11 @@ export interface Reminder {
   isActive: boolean;
   createdAt: string;
 }
+
+export interface TrackingLog {
+  id: string;
+  userId: string;
+  protocolId: string;
+  trackedAt: string;
+  notes: string | null;
+}
