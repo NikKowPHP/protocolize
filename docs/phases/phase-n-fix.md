@@ -26,7 +26,7 @@ The audit identified three primary blockers: a non-functional content ingestion 
     - **Action**: Create a new file `src/components/ForgotPasswordForm.tsx`. This component will contain a form with an email input and a submit button. The form's submit handler should call `supabase.auth.resetPasswordForEmail`. Then, update `src/app/forgot-password/page.tsx` to import and render this new component.
     - **Reason**: Audit Finding: "The page at `src/app/forgot-password/page.tsx` attempts to import a component named `ForgotPasswordForm` which is not present in the codebase. This will cause a runtime error, making the feature non-functional."
 
-- [ ] **UPDATE**: [PR-011]: Correctly seed foundational protocols as 'free' and 'published'.
+- [x] **UPDATE**: [PR-011]: Correctly seed foundational protocols as 'free' and 'published'.
     - **File(s)**: `prisma/seeders/protocols.ts`
     - **Action**: In the `foundationalProtocols` array, iterate through each protocol object and ensure the properties `isFree: true` and `status: 'PUBLISHED'` are present.
     - **Reason**: Audit Finding: "The seeder at `prisma/seeders/protocols.ts` creates the foundational protocols but fails to set `isFree: true`. As a result, no foundational reminders are ever created for new users."

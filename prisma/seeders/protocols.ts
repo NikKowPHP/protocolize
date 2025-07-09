@@ -20,6 +20,8 @@ export async function seedProtocolsAndEpisodes(prisma: PrismaClient) {
     data: {
       name: 'Morning Sunlight',
       description: 'View sunlight within 30-60 minutes of waking',
+      isFree: true,
+      status: 'PUBLISHED',
       episodes: {
         create: [
           {
@@ -46,6 +48,8 @@ export async function seedProtocolsAndEpisodes(prisma: PrismaClient) {
     data: {
       name: 'NSDR',
       description: 'Non-Sleep Deep Rest protocol',
+      isFree: true,
+      status: 'PUBLISHED',
       episodes: {
         create: [
           {
@@ -72,6 +76,8 @@ export async function seedProtocolsAndEpisodes(prisma: PrismaClient) {
     data: {
       name: 'Cold Exposure',
       description: 'Using cold to boost metabolism and resilience',
+      isFree: true,
+      status: 'PUBLISHED',
       episodes: {
         create: [
           {
