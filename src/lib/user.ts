@@ -29,6 +29,7 @@ export async function ensureUserInDb(
   const newUser = await prisma.user.create({
     data: {
       id: supabaseUser.id,
+      supabaseAuthId: supabaseUser.id,
       email: supabaseUser.email!,
       name:
         supabaseUser.user_metadata?.full_name ||
@@ -37,6 +38,32 @@ export async function ensureUserInDb(
     },
   });
   console.log(`User with ID ${supabaseUser.id} created in local DB.`);
+
+  // Create default reminders for new user
+  const freeProtocols = await prisma.protocol.findMany({
+    where: { isFree: true }
+  });
+
+  for (const protocol of freeProtocols) {
+    await prisma.userReminder.createMany({
+      data: [
+        {
+          userId: newUser.id,
+          protocolId: protocol.id,
+          reminderTime: '08:00',
+          timezone: 'UTC',
+          isActive: true
+        },
+        {
+          userId: newUser.id,
+          protocolId: protocol.id,
+          reminderTime: '13:00',
+          timezone: 'UTC',
+          isActive: true
+        }
+      ]
+    });
+  }
 
   return newUser;
 }
