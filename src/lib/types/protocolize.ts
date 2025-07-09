@@ -33,3 +33,12 @@ export interface Episode {
   protocols: Protocol[];
   summaries: Summary[];
 }
+
+export interface Reminder {
+  id: string;
+  userId: string;
+  protocolId: string;
+  reminderTime: string;
+  isActive: boolean;
+  createdAt: string;
+}
