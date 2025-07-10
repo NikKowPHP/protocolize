@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
-import { seedPlans } from './seeders/plans';
-import { seedProtocolsAndEpisodes } from './seeders/protocols';
+import { seedPlans } from './seeders/plans.cts';
+import { seedProtocolsAndEpisodes } from './seeders/protocols.cts';
 
 const prisma = new PrismaClient();
 
