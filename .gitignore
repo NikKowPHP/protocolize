@@ -47,4 +47,3 @@ repomix-output.xml
 logs/
 # work_breakdown/  # Commented out to allow tracking plan files
 .env
-.
