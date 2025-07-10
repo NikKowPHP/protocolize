@@ -9,11 +9,12 @@ export const getReminders = async (): Promise<Reminder[]> => {
 type CreateReminderPayload = {
   protocolId: string;
   reminderTime: string;
+  timezone: string;
   isActive?: boolean;
 };
 
 export const createReminder = async (
-  payload: CreateReminderPayload
+  payload: CreateReminderPayload,
 ): Promise<Reminder> => {
   const res = await fetch('/api/reminders', {
     method: 'POST',
@@ -34,7 +35,7 @@ type UpdateReminderPayload = {
 
 export const updateReminder = async (
   reminderId: string,
-  payload: UpdateReminderPayload
+  payload: UpdateReminderPayload,
 ): Promise<Reminder> => {
   const res = await fetch(`/api/reminders/${reminderId}`, {
     method: 'PUT',

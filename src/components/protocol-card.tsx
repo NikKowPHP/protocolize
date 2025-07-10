@@ -39,7 +39,10 @@ export const ProtocolCard = ({
     } catch (error) {
       toast({
         title: 'Error',
-        description: error instanceof Error ? error.message : 'Failed to mark protocol as complete',
+        description:
+          error instanceof Error
+            ? error.message
+            : 'Failed to mark protocol as complete',
         variant: 'destructive',
       });
     }
@@ -58,7 +61,7 @@ export const ProtocolCard = ({
           </CardContent>
         </Card>
       </Link>
-      <CardFooter className="p-2">
+      <CardFooter className="p-2 pt-2 mt-auto">
         <Button
           onClick={handleMarkComplete}
           size="sm"

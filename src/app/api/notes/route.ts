@@ -28,6 +28,13 @@ export async function GET(req: NextRequest) {
           episodeId,
           isPublic: true,
         },
+        include: {
+          user: {
+            select: {
+              name: true,
+            },
+          },
+        },
         orderBy: {
           createdAt: 'desc',
         },
@@ -52,57 +59,6 @@ export async function GET(req: NextRequest) {
   if (authError || !user) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
-  
-  export const POST = async (req: NextRequest) => {
-    const supabase = await createClient();
-    const {
-      data: { user },
-      error: authError,
-    } = await supabase.auth.getUser();
-  
-    if (authError || !user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-  
-    try {
-      const json = await req.json();
-      const body = createNoteSchema.parse(json);
-  
-      // Feature Gating: Only premium users can create public notes
-      if (body.isPublic) {
-        const dbUser = await prisma.user.findUnique({
-          where: { id: user.id },
-          select: { subscriptionTier: true },
-        });
-        if (dbUser?.subscriptionTier !== 'Premium') {
-          return NextResponse.json(
-            { error: 'Public notes are a premium feature.' },
-            { status: 403 },
-          );
-        }
-      }
-  
-      const note = await prisma.note.create({
-        data: {
-          userId: user.id,
-          episodeId: body.episodeId,
-          content: body.content,
-          isPublic: body.isPublic,
-        },
-      });
-  
-      return NextResponse.json(note, { status: 201 });
-    } catch (error) {
-      if (error instanceof z.ZodError) {
-        return NextResponse.json({ error: error.errors }, { status: 400 });
-      }
-      console.error('Error creating note:', error);
-      return NextResponse.json(
-        { error: 'Failed to create note' },
-        { status: 500 },
-      );
-    }
-  }
 
   try {
     const notes = await prisma.note.findMany({
@@ -119,6 +75,57 @@ export async function GET(req: NextRequest) {
     console.error('Error fetching notes:', error);
     return NextResponse.json(
       { error: 'Failed to fetch notes' },
+      { status: 500 },
+    );
+  }
+}
+
+export async function POST(req: NextRequest) {
+  const supabase = await createClient();
+  const {
+    data: { user },
+    error: authError,
+  } = await supabase.auth.getUser();
+
+  if (authError || !user) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
+  try {
+    const json = await req.json();
+    const body = createNoteSchema.parse(json);
+
+    // Premium check for public notes
+    if (body.isPublic) {
+      const dbUser = await prisma.user.findUnique({
+        where: { id: user.id },
+        select: { subscriptionTier: true },
+      });
+      if (dbUser?.subscriptionTier !== 'Premium') {
+        return NextResponse.json(
+          { error: 'Making notes public is a premium feature.' },
+          { status: 403 },
+        );
+      }
+    }
+
+    const note = await prisma.note.create({
+      data: {
+        userId: user.id,
+        episodeId: body.episodeId,
+        content: body.content,
+        isPublic: body.isPublic,
+      },
+    });
+
+    return NextResponse.json(note, { status: 201 });
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return NextResponse.json({ error: error.errors }, { status: 400 });
+    }
+    console.error('Error creating note:', error);
+    return NextResponse.json(
+      { error: 'Failed to create note' },
       { status: 500 },
     );
   }

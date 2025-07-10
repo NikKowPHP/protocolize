@@ -5,6 +5,7 @@ import { AuthProvider } from '@/lib/auth-context';
 import Navbar from '@/components/Navbar';
 import { ThemeProvider } from '@/components/theme-provider';
 import QueryProvider from '@/components/query-provider';
+import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
   title: 'Protocolize - Turn Theory into Practice',
@@ -30,6 +31,7 @@ export default function RootLayout({
             <AuthProvider>
               <Navbar />
               <main>{children}</main>
+              <Toaster />
             </AuthProvider>
           </QueryProvider>
         </ThemeProvider>
